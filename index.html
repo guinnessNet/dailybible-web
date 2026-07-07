@@ -1,0 +1,458 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>데일리바이블 - 매일 읽는 무료 성경 앱</title>
+  <meta name="description" content="데일리바이블은 광고 없이 여러 번역본을 오프라인으로 읽고 들을 수 있는 무료 성경 앱입니다.">
+  <meta name="theme-color" content="#1e3a5f">
+  <meta property="og:title" content="데일리바이블">
+  <meta property="og:description" content="매일 읽는 무료 성경 앱">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="icon.png">
+  <link rel="icon" href="icon.png">
+  <style>
+    :root {
+      color-scheme: light dark;
+      --navy: #1e3a5f;
+      --navy-deep: #142941;
+      --gold: #e8b84b;
+      --gold-soft: #fff3c8;
+      --paper: #fbfaf6;
+      --ink: #182333;
+      --muted: #5d6a7a;
+      --line: rgba(30, 58, 95, 0.16);
+      --panel: rgba(255, 255, 255, 0.76);
+      --shadow: 0 24px 70px rgba(18, 35, 54, 0.14);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background:
+        radial-gradient(circle at top left, rgba(232, 184, 75, 0.20), transparent 30rem),
+        linear-gradient(180deg, #ffffff 0%, var(--paper) 52%, #f4f7fb 100%);
+      color: var(--ink);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
+      line-height: 1.6;
+      letter-spacing: 0;
+    }
+
+    a {
+      color: inherit;
+    }
+
+    a:focus-visible,
+    button:focus-visible {
+      outline: 3px solid rgba(232, 184, 75, 0.72);
+      outline-offset: 4px;
+    }
+
+    .page {
+      width: min(100%, 1120px);
+      margin: 0 auto;
+      padding: 28px 20px 22px;
+    }
+
+    .hero {
+      min-height: 72vh;
+      display: grid;
+      align-items: center;
+      gap: 36px;
+      padding: 28px 0 44px;
+    }
+
+    .brand-mark {
+      width: 88px;
+      height: 88px;
+      display: block;
+      border-radius: 22px;
+      box-shadow: 0 16px 34px rgba(30, 58, 95, 0.22);
+    }
+
+    .eyebrow {
+      margin: 22px 0 10px;
+      color: var(--navy);
+      font-size: 0.92rem;
+      font-weight: 800;
+    }
+
+    h1 {
+      margin: 0;
+      color: var(--navy-deep);
+      font-size: clamp(3rem, 12vw, 5rem);
+      line-height: 0.98;
+      font-weight: 900;
+      word-break: keep-all;
+    }
+
+    .tagline {
+      margin: 16px 0 0;
+      color: var(--navy);
+      font-size: clamp(1.35rem, 5vw, 2rem);
+      line-height: 1.32;
+      font-weight: 800;
+    }
+
+    .intro {
+      max-width: 640px;
+      margin: 20px 0 0;
+      color: var(--muted);
+      font-size: 1.05rem;
+    }
+
+    .actions {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 10px;
+      margin-top: 30px;
+    }
+
+    .play-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 54px;
+      padding: 0 22px;
+      border-radius: 8px;
+      background: var(--navy);
+      color: #ffffff;
+      font-size: 1rem;
+      font-weight: 800;
+      text-decoration: none;
+      box-shadow: 0 14px 26px rgba(30, 58, 95, 0.24);
+      transition: transform 160ms ease, background 160ms ease, box-shadow 160ms ease;
+    }
+
+    .play-link:hover {
+      transform: translateY(-2px);
+      background: #244b7c;
+      box-shadow: 0 18px 34px rgba(30, 58, 95, 0.28);
+    }
+
+    .review-note {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.88rem;
+    }
+
+    .hero-visual {
+      display: none;
+    }
+
+    .feature-band {
+      display: grid;
+      gap: 14px;
+      margin: 0 0 46px;
+      padding: 8px 0 0;
+    }
+
+    .feature {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 14px;
+      align-items: start;
+      padding: 18px 0;
+      border-top: 1px solid var(--line);
+    }
+
+    .feature:last-child {
+      border-bottom: 1px solid var(--line);
+    }
+
+    .feature-icon {
+      width: 36px;
+      height: 36px;
+      display: inline-grid;
+      place-items: center;
+      border-radius: 8px;
+      background: var(--gold-soft);
+      color: var(--navy);
+      font-size: 1rem;
+      font-weight: 900;
+    }
+
+    .feature h2 {
+      grid-column: 2;
+      margin: 0;
+      color: var(--navy-deep);
+      font-size: 1.05rem;
+      line-height: 1.35;
+      word-break: keep-all;
+    }
+
+    .feature p {
+      grid-column: 2;
+      margin: 4px 0 0;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .footer {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      padding-top: 22px;
+      padding-bottom: 4px;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .footer-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px 12px;
+      align-items: center;
+    }
+
+    .footer a {
+      color: var(--navy);
+      font-weight: 700;
+      text-underline-offset: 4px;
+    }
+
+    .dot {
+      color: rgba(93, 106, 122, 0.62);
+    }
+
+    @media (min-width: 760px) {
+      .page {
+        padding: 34px 34px 28px;
+      }
+
+      .hero {
+        min-height: 70vh;
+        grid-template-columns: minmax(0, 1.05fr) minmax(300px, 0.95fr);
+      }
+
+      .brand-mark {
+        width: 110px;
+        height: 110px;
+        border-radius: 26px;
+      }
+
+      .hero-visual {
+        display: grid;
+        min-height: 420px;
+        place-items: center;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background:
+          linear-gradient(145deg, rgba(255, 255, 255, 0.76), rgba(255, 243, 200, 0.52)),
+          radial-gradient(circle at 76% 28%, rgba(232, 184, 75, 0.28), transparent 16rem);
+        box-shadow: var(--shadow);
+      }
+
+      .phone {
+        width: min(78%, 320px);
+        aspect-ratio: 9 / 16;
+        display: grid;
+        align-content: center;
+        justify-items: center;
+        gap: 22px;
+        padding: 34px 26px;
+        border: 10px solid var(--navy-deep);
+        border-radius: 34px;
+        background: linear-gradient(180deg, #ffffff, #f7f2e6);
+        box-shadow: 0 30px 70px rgba(20, 41, 65, 0.25);
+      }
+
+      .phone img {
+        width: 96px;
+        height: 96px;
+        border-radius: 24px;
+      }
+
+      .phone-title {
+        color: var(--navy-deep);
+        font-size: 1.35rem;
+        font-weight: 900;
+      }
+
+      .phone-lines {
+        width: 100%;
+        display: grid;
+        gap: 10px;
+      }
+
+      .phone-lines span {
+        height: 10px;
+        border-radius: 999px;
+        background: rgba(30, 58, 95, 0.14);
+      }
+
+      .phone-lines span:nth-child(2) {
+        width: 72%;
+      }
+
+      .phone-lines span:nth-child(3) {
+        width: 86%;
+        background: rgba(232, 184, 75, 0.42);
+      }
+
+      .feature-band {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 0;
+        border-top: 1px solid var(--line);
+        border-bottom: 1px solid var(--line);
+      }
+
+      .feature {
+        display: block;
+        min-height: 190px;
+        padding: 24px 22px;
+        border-top: 0;
+        border-right: 1px solid var(--line);
+      }
+
+      .feature:last-child {
+        border-right: 0;
+        border-bottom: 0;
+      }
+
+      .feature-icon {
+        margin-bottom: 18px;
+      }
+
+      .footer {
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+      }
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --paper: #0f1b29;
+        --ink: #eef3f8;
+        --muted: #b7c2d0;
+        --line: rgba(238, 243, 248, 0.18);
+        --panel: rgba(20, 41, 65, 0.72);
+        --gold-soft: rgba(232, 184, 75, 0.16);
+        --navy-deep: #f5f8fb;
+      }
+
+      body {
+        background:
+          radial-gradient(circle at top left, rgba(232, 184, 75, 0.18), transparent 28rem),
+          linear-gradient(180deg, #102338 0%, #0f1b29 62%, #0b1520 100%);
+      }
+
+      .eyebrow,
+      .tagline,
+      .footer a {
+        color: #f2c65f;
+      }
+
+      .play-link {
+        background: #e8b84b;
+        color: #102338;
+      }
+
+      .play-link:hover {
+        background: #f1c865;
+      }
+
+      .hero-visual {
+        background:
+          linear-gradient(145deg, rgba(20, 41, 65, 0.86), rgba(30, 58, 95, 0.62)),
+          radial-gradient(circle at 76% 28%, rgba(232, 184, 75, 0.22), transparent 16rem);
+      }
+
+      .phone {
+        border-color: #07101a;
+        background: linear-gradient(180deg, #182b42, #102338);
+      }
+
+      .phone-lines span {
+        background: rgba(238, 243, 248, 0.17);
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html {
+        scroll-behavior: auto;
+      }
+
+      .play-link {
+        transition: none;
+      }
+
+      .play-link:hover {
+        transform: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <section class="hero" aria-labelledby="title">
+      <div>
+        <img class="brand-mark" src="icon.png" width="512" height="512" alt="데일리바이블 앱 아이콘">
+        <p class="eyebrow">무료 성경 앱</p>
+        <h1 id="title">데일리바이블</h1>
+        <p class="tagline">매일 읽는 무료 성경 앱</p>
+        <p class="intro">광고 없이 여러 번역본을 오프라인으로 읽고 들을 수 있습니다. 기록해 둔 형광펜, 북마크, 메모와 검색으로 매일의 읽기를 이어가세요.</p>
+        <div class="actions">
+          <a class="play-link" href="https://play.google.com/store/apps/details?id=kr.dailybible.app" rel="noopener">Google Play에서 다운로드</a>
+          <p class="review-note">현재 심사 중 · 승인되면 바로 연결됩니다</p>
+        </div>
+      </div>
+
+      <div class="hero-visual" aria-hidden="true">
+        <div class="phone">
+          <img src="icon.png" width="512" height="512" alt="">
+          <div class="phone-title">데일리바이블</div>
+          <div class="phone-lines">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="feature-band" aria-label="주요 기능">
+      <article class="feature">
+        <span class="feature-icon">A</span>
+        <h2>여러 번역본</h2>
+        <p>익숙한 번역본을 골라 읽고 필요한 때 바로 바꿔 볼 수 있습니다.</p>
+      </article>
+      <article class="feature">
+        <span class="feature-icon">O</span>
+        <h2>완전 오프라인</h2>
+        <p>한 번 설치하면 네트워크가 없어도 읽기 흐름을 이어갈 수 있습니다.</p>
+      </article>
+      <article class="feature">
+        <span class="feature-icon">T</span>
+        <h2>성경 듣기(TTS)</h2>
+        <p>이동 중에도 기기의 음성 읽기 기능으로 본문을 들을 수 있습니다.</p>
+      </article>
+      <article class="feature">
+        <span class="feature-icon">M</span>
+        <h2>형광펜/북마크/메모/검색</h2>
+        <p>남겨 둔 표시와 메모를 다시 찾고 필요한 내용을 빠르게 검색합니다.</p>
+      </article>
+    </section>
+  </main>
+
+  <footer class="page footer">
+    <div class="footer-links">
+      <a href="https://guinnessnet.github.io/dailybible-privacy/" rel="noopener">개인정보처리방침</a>
+      <span class="dot">·</span>
+      <a href="mailto:kjh@maipharm.com">kjh@maipharm.com</a>
+    </div>
+    <div>© 2026 데일리바이블</div>
+  </footer>
+</body>
+</html>
