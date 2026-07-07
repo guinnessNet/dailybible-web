@@ -43,7 +43,7 @@
   <script>
     // 구절 묶음 공유 링크(https://dailybible.kr/s/...)를 앱 없이 열었을 때의 폴백.
     // 앱이 설치·검증돼 있으면 Android App Link가 가로채 앱이 열리므로 이 페이지는 안 보인다.
-    if (location.pathname.indexOf('/s') === 0) {
+    if (location.pathname === '/s' || location.pathname.indexOf('/s/') === 0) {
       document.getElementById('title').textContent = '공유된 구절 묶음';
       document.getElementById('sub').innerHTML = '이 링크는 <b>데일리바이블</b> 앱에서 열 수 있는 구절 묶음이에요.<br>앱을 설치하면 바로 볼 수 있습니다.';
       // 앱이 있는데 안 열렸을 수도 있으니 한 번 앱 실행을 시도(커스텀 스킴)

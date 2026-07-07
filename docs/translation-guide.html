@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>데일리바이블 역본 만들기 가이드 (.dbbible.json)</title>
+<meta name="description" content="데일리바이블 앱에서 가져올 수 있는 성경 파일(.dbbible.json)의 공식 포맷 명세. 이 페이지를 AI에게 주면 역본·주석성경 파일을 만들 수 있습니다.">
+<style>
+  :root { color-scheme: light dark; }
+  body { font-family: -apple-system, "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
+         max-width: 720px; margin: 0 auto; padding: 24px 16px 64px; line-height: 1.7;
+         color: #1f2937; background: #ffffff; }
+  h1 { font-size: 1.5rem; border-bottom: 2px solid #1e3a5f; padding-bottom: 8px; }
+  h2 { font-size: 1.15rem; margin-top: 2.2em; color: #1e3a5f; }
+  code, pre { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 0.85em; }
+  pre { background: #f3f4f6; padding: 12px; border-radius: 8px; overflow-x: auto; }
+  code { background: #f3f4f6; padding: 1px 5px; border-radius: 4px; }
+  table { border-collapse: collapse; width: 100%; font-size: 0.9em; }
+  th, td { border: 1px solid #d1d5db; padding: 6px 8px; text-align: left; }
+  .warn { background: #fef2f2; border-left: 4px solid #dc2626; padding: 10px 14px; border-radius: 4px; }
+  .tip  { background: #eff6ff; border-left: 4px solid #2563eb; padding: 10px 14px; border-radius: 4px; }
+  @media (prefers-color-scheme: dark) {
+    body { color: #e5e7eb; background: #111827; }
+    h2 { color: #93c5fd; }
+    pre, code { background: #1f2937; }
+    th, td { border-color: #374151; }
+    .warn { background: #3f1d1d; }
+    .tip { background: #172554; }
+  }
+</style>
+</head>
+<body>
+
+<h1>데일리바이블 역본 만들기 가이드</h1>
+<p>데일리바이블 앱은 <code>.dbbible.json</code> 파일을 가져와 새 역본이나 <strong>주석성경</strong>으로 읽을 수 있습니다.
+이 문서는 그 파일의 <strong>공식 포맷 명세</strong>입니다. 사람이 직접 만들어도 되고,
+이 페이지 주소를 AI에게 주고 만들어 달라고 해도 됩니다.</p>
+
+<div class="warn">
+<strong>저작권 안내 (반드시 읽어주세요)</strong><br>
+본인이 <strong>적법하게 보유·이용할 수 있는 본문</strong>으로만 파일을 만들어 주세요.
+저작권이 있는 역본(예: 개역개정, NIV 등)으로 만든 파일을 <strong>다른 사람에게 배포·공유하는 것은 저작권 침해</strong>입니다.
+주석성경도 베이스 본문의 저작권을 그대로 따르므로, <strong>공유는 공개도메인 본문(예: 개역한글)으로 만든 것만</strong> 하세요.
+이 사이트는 저작권이 있는 역본 파일을 제공하지 않습니다.
+</div>
+
+<h2>AI에게 만들어 달라고 하기</h2>
+<p>ChatGPT·Claude 등 파일을 만들 수 있는 AI에게 아래처럼 요청하세요.</p>
+<pre>다음 가이드 페이지를 읽고 포맷을 정확히 지켜서
+데일리바이블 가져오기 파일(.dbbible.json)을 만들어 줘:
+https://dailybible.kr/docs/translation-guide.html
+
+[여기에 본인이 보유한 본문/주석 자료를 붙여넣거나 첨부]
+
+- 역본 이름: (예: 개역한글+내주석)
+- 역본 ID: (예: KRV-mynote)
+- 완성되면 .dbbible.json 파일로 저장해 줘.</pre>
+<p>받은 파일은 앱의 <strong>설정 → 성경 가져오기</strong>에서 불러오면 됩니다.
+(안드로이드는 파일 관리자에서 파일을 탭해 "데일리바이블"로 여는 것도 가능)</p>
+<p>JSON을 직접 다루기 어렵다면 <a href="/studio.html"><strong>역본 스튜디오</strong></a>에서
+파일을 열어 화면으로 편집할 수도 있습니다 (열기 → 절·주석·메모 수정 → 내려받기).</p>
+
+<h2>파일 형식 요약</h2>
+<p>UTF-8 인코딩의 <strong>단일 JSON 파일</strong>이며, 최대 <strong>30MB</strong>입니다. 최상위 구조:</p>
+<table>
+<tr><th>필드</th><th>타입</th><th>설명</th></tr>
+<tr><td><code>format</code></td><td>string</td><td><code>"dailybible-translation@1"</code> 또는 <code>"dailybible-translation@2"</code> (전체 문자열 — <code>"@2"</code>만 쓰면 안 됨). <strong>memo 필드나 제2경전 책이 하나라도 있으면 반드시 @2</strong>, 아니면 @1(구버전 호환) (필수, 고정값)</td></tr>
+<tr><td><code>id</code></td><td>string</td><td>역본 고유 ID. 영문/숫자/<code>-</code>/<code>_</code> 1~32자. 같은 ID로 다시 가져오면 <strong>덮어씀</strong></td></tr>
+<tr><td><code>name</code></td><td>string</td><td>앱에 표시될 이름. 자유 텍스트 (예: <code>"개역한글+내주석"</code>)</td></tr>
+<tr><td><code>language</code></td><td>string</td><td>언어 코드 (<code>"ko"</code>, <code>"en"</code> 등). TTS 언어 선택에 사용</td></tr>
+<tr><td><code>direction</code></td><td>string</td><td><code>"ltr"</code> 또는 <code>"rtl"</code></td></tr>
+<tr><td><code>books</code></td><td>array</td><td>포함된 책 목록. <strong>66권 전체가 아니어도 됨</strong>(부분 정경 허용)</td></tr>
+<tr><td><code>content</code></td><td>object</td><td>책 ID → 본문. <code>books</code>의 ID 집합과 정확히 일치해야 함</td></tr>
+</table>
+
+<h2>books 항목</h2>
+<pre>{ "id": "GEN", "name": "창세기", "nameEn": "Genesis", "testament": "old", "chapters": 50 }</pre>
+<ul>
+<li><code>id</code>: 아래 66권 표준 ID 중 하나 (필수)</li>
+<li><code>testament</code>: <code>"old"</code> 또는 <code>"new"</code></li>
+<li><code>chapters</code>: 생략 가능 — 실제 본문에서 자동 계산됩니다</li>
+</ul>
+
+<h2>content 항목 (본문)</h2>
+<pre>"GEN": {
+  "bookId": "GEN",
+  "bookName": "창세기",
+  "chapters": [
+    {
+      "chapter": 1,
+      "verses": [
+        { "verse": null, "text": "천지 창조" },
+        { "verse": 1, "text": "태초에 하나님이 천지를 창조하시니라",
+          "note": "히브리어 '바라'(창조하다)는 오직 하나님을 주어로만 쓰인다." },
+        { "verse": 2, "text": "땅이 혼돈하고 공허하며 …" }
+      ]
+    }
+  ]
+}</pre>
+<ul>
+<li><code>chapter</code>: <strong>1부터 연속</strong>이어야 합니다 (1, 2, 3, … 건너뛰기 불가)</li>
+<li><code>verse</code>: 절 번호(양의 정수). 특수값 — <code>0</code>은 시편 표제, <code>null</code>은 번호 없는 소제목(섹션 제목) 행</li>
+<li><code>text</code>: 절 본문 (필수, 문자열)</li>
+<li><code>note</code>: <strong>선택.</strong> 이 절에 대한 주석. 있으면 앱에서 절 아래 회색 글씨로 표시되고, 음성 낭독에서는 읽지 않습니다</li>
+<li><code>memo</code>: <strong>선택(@2 전용).</strong> 직전 공유자의 메모 한 세대. 앱에서 초록 글씨로 표시되며, 이 파일을 기반으로 다시 공유하면 주석(note)으로 합쳐집니다(승격)</li>
+</ul>
+
+<h2>주석성경 만들기</h2>
+<div class="tip">
+공개도메인 본문(예: 개역한글)에 <code>note</code>를 붙이면 나만의 <strong>주석성경</strong>이 됩니다.
+앱에서는 별도 역본으로 나타나 <code>개역한글 ↔ 개역한글+내주석</code>처럼 넘겨가며 읽을 수 있습니다.
+</div>
+<ul>
+<li><code>name</code>은 알아보기 쉽게: <code>"개역한글+내주석"</code>, <code>"개역한글+김목사주석"</code></li>
+<li><code>id</code>는 원본과 다르게: <code>"KRV-mynote"</code> (같은 ID는 덮어쓰므로, 주석 개정판 배포에 활용 가능)</li>
+<li>일부 책만 담아도 됩니다 — 로마서 주석만 담은 파일도 유효</li>
+<li>완성 파일은 앱의 <strong>내보내기</strong> 기능으로 다른 기기·다른 사람에게 전달할 수 있습니다 (공개도메인 본문일 때만!)</li>
+<li><strong>재공유와 승격</strong>: 받은 파일(주석+메모)을 기반으로 앱의 "주석성경 만들기"로 새 버전을 만들면, 이전 공유자의 메모(memo)는 주석(note) 뒤에 줄바꿈으로 합쳐지고(승격), 내 메모가 새 memo가 됩니다. 즉 파일 안의 메모는 항상 "직전 공유자 한 사람"의 것입니다</li>
+</ul>
+
+<h2>66권 표준 책 ID</h2>
+<p>구약(39권):</p>
+<pre>GEN EXO LEV NUM DEU JOS JDG RUT 1SA 2SA 1KI 2KI 1CH 2CH EZR NEH EST JOB
+PSA PRO ECC SNG ISA JER LAM EZK DAN HOS JOL AMO OBA JON MIC NAH HAB ZEP
+HAG ZEC MAL</pre>
+<p>신약(27권):</p>
+<pre>MAT MRK LUK JHN ACT ROM 1CO 2CO GAL EPH PHP COL 1TH 2TH 1TI 2TI TIT PHM
+HEB JAS 1PE 2PE 1JN 2JN 3JN JUD REV</pre>
+
+<p>가톨릭 정경 제2경전(<strong>@2 형식 전용</strong>) — 구약 영역에 배치되며, 표시 순서는 books 배열 순서를 따릅니다:</p>
+<pre>TOB JDT WIS SIR BAR 1MA 2MA
+ESG LJE S3Y SUS BEL   (다니엘/에스델 추가부 — 본문 통합을 권장, 별도 책도 허용)</pre>
+<p>책 이름(<code>name</code>·<code>bookName</code>)은 교단 표기 그대로 자유롭게 쓰면 됩니다 —
+가톨릭 역본이라면 <code>"마태오 복음서"</code>, <code>"탈출기"</code>, <code>"요한 묵시록"</code>처럼.
+ID는 내부 식별자일 뿐이고 화면에는 항상 이 이름이 표시됩니다.</p>
+
+<h2>완성 예시 (전체 파일)</h2>
+<pre>{
+  "format": "dailybible-translation@1",
+  "id": "KRV-mynote",
+  "name": "개역한글+내주석",
+  "language": "ko",
+  "direction": "ltr",
+  "books": [
+    { "id": "GEN", "name": "창세기", "nameEn": "Genesis", "testament": "old" }
+  ],
+  "content": {
+    "GEN": {
+      "bookId": "GEN",
+      "bookName": "창세기",
+      "chapters": [
+        {
+          "chapter": 1,
+          "verses": [
+            { "verse": 1, "text": "태초에 하나님이 천지를 창조하시니라",
+              "note": "성경 전체의 서문. 하나님이 만물의 창조주이심을 선언한다." },
+            { "verse": 2, "text": "땅이 혼돈하고 공허하며 흑암이 깊음 위에 있고 하나님의 신은 수면에 운행하시니라" }
+          ]
+        }
+      ]
+    }
+  }
+}</pre>
+
+<h2>자주 하는 실수</h2>
+<ul>
+<li><code>format</code> 값 오타 — 정확히 <code>dailybible-translation@1</code> 또는 <code>dailybible-translation@2</code> (축약형 <code>"@2"</code> 불가)</li>
+<li><code>books</code>에는 있는데 <code>content</code>에 없는 책(또는 반대) — 두 목록은 정확히 일치해야 함</li>
+<li>장 번호 건너뜀 — 반드시 1부터 연속</li>
+<li>표준 외 책 ID (<code>Gen</code>, <code>gen</code> 불가 — 대문자 <code>GEN</code>)</li>
+<li>30MB 초과 — 책을 나눠 여러 파일로 만드세요</li>
+</ul>
+
+<p style="margin-top:3em; font-size:0.85em; color:#6b7280;">
+데일리바이블 · <a href="https://dailybible.kr">dailybible.kr</a> · Soli Deo Gloria
+</p>
+
+</body>
+</html>
