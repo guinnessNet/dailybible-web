@@ -1,458 +1,564 @@
 <!doctype html>
 <html lang="ko">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>데일리바이블 - 매일 읽는 무료 성경 앱</title>
-  <meta name="description" content="데일리바이블은 광고 없이 여러 번역본을 오프라인으로 읽고 들을 수 있는 무료 성경 앱입니다.">
-  <meta name="theme-color" content="#1e3a5f">
-  <meta property="og:title" content="데일리바이블">
-  <meta property="og:description" content="매일 읽는 무료 성경 앱">
-  <meta property="og:type" content="website">
-  <meta property="og:image" content="icon.png">
-  <link rel="icon" href="icon.png">
-  <style>
-    :root {
-      color-scheme: light dark;
-      --navy: #1e3a5f;
-      --navy-deep: #142941;
-      --gold: #e8b84b;
-      --gold-soft: #fff3c8;
-      --paper: #fbfaf6;
-      --ink: #182333;
-      --muted: #5d6a7a;
-      --line: rgba(30, 58, 95, 0.16);
-      --panel: rgba(255, 255, 255, 0.76);
-      --shadow: 0 24px 70px rgba(18, 35, 54, 0.14);
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>데일리바이블 - 매일 읽는 무료 성경 앱</title>
+<meta name="description" content="데일리바이블 — 광고 없이 여러 번역본을 오프라인으로 읽고 듣는 무료 성경 앱.">
+<meta name="theme-color" content="#1e3a5f">
+<meta property="og:title" content="데일리바이블 — 매일 읽는 무료 성경 앱">
+<meta property="og:description" content="광고 없이 여러 번역본을 오프라인으로 읽고 듣는 무료 성경 앱.">
+<meta property="og:url" content="https://dailybible.kr/">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://dailybible.kr/img/og.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="icon.png">
+<style>
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+  :root{
+    --navy:#1e3a5f; --deep:#142941; --gold:#e8b84b;
+    --bg:#fbfaf6; --card:#ffffff;
+    --ink:#243f61; --heading:#142941; --soft:rgba(30,58,95,.68);
+    --line:rgba(30,58,95,.16); --line-soft:rgba(30,58,95,.09);
+    --cta-bg:#1e3a5f; --cta-fg:#fbfaf6; --cta-hover:#142941;
+    --gold-soft:rgba(232,184,75,.13); --gold-line:rgba(232,184,75,.5);
+    --chip-fg:#142941;
+  }
+  @media (prefers-color-scheme:dark){
+    :root{
+      --bg:#0e1f33; --deep:#0a1728; --card:#152b45;
+      --ink:#d3dce7; --heading:#f2f6fb; --soft:rgba(211,220,231,.66);
+      --line:rgba(211,220,231,.16); --line-soft:rgba(211,220,231,.09);
+      --cta-bg:#e8b84b; --cta-fg:#142941; --cta-hover:#f0c76a;
+      --gold-soft:rgba(232,184,75,.1); --gold-line:rgba(232,184,75,.42);
+      --chip-fg:#142941;
     }
+  }
+  body{
+    margin:0; color:var(--ink); background:var(--bg);
+    background-image:
+      radial-gradient(130% 90% at 88% -8%, var(--gold-soft), transparent 52%),
+      linear-gradient(180deg, color-mix(in srgb, var(--bg) 92%, var(--gold) 8%), var(--bg) 22%);
+    background-attachment:fixed;
+    font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Noto Sans KR","Segoe UI",Roboto,sans-serif;
+    line-height:1.68; word-break:keep-all; -webkit-font-smoothing:antialiased;
+    text-rendering:optimizeLegibility;
+  }
+  a{color:var(--navy);text-decoration-thickness:1px;text-underline-offset:2px}
+  @media (prefers-color-scheme:dark){a{color:var(--gold)}}
+  a:hover{color:var(--gold)}
+  :focus-visible{outline:2px solid var(--gold);outline-offset:3px;border-radius:3px}
+  ::selection{background:var(--gold-soft)}
+  .wrap{width:100%;max-width:1080px;margin:0 auto;padding:0 22px}
+  .eyebrow{font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;font-weight:800;color:var(--soft);margin:0}
+  h1,h2,h3{color:var(--heading);margin:0;letter-spacing:-.01em}
+  p{margin:0}
 
-    * {
-      box-sizing: border-box;
-    }
+  /* ---------- HERO ---------- */
+  .hero{padding:clamp(48px,9vw,92px) 0 clamp(40px,7vw,72px)}
+  .hero-grid{display:flex;flex-direction:column;gap:clamp(32px,6vw,56px);align-items:flex-start}
+  .appicon{width:96px;height:96px;border-radius:24px;flex:none;display:block;
+    box-shadow:0 10px 26px rgba(20,41,65,.28)}
+  h1.title{font-weight:900;font-size:clamp(3rem,13vw,5rem);line-height:.98;margin:.5rem 0 0}
+  .tagline{font-size:clamp(1.15rem,4vw,1.5rem);font-weight:700;color:var(--heading);margin-top:.7rem}
+  .intro{margin-top:1.1rem;max-width:34em;font-size:1.04rem;color:var(--ink)}
+  .cta{display:inline-flex;align-items:center;gap:.6em;margin-top:1.8rem;padding:.95em 1.5em;border-radius:12px;
+    background:var(--cta-bg);color:var(--cta-fg);font-weight:800;font-size:1rem;text-decoration:none;
+    box-shadow:0 8px 20px rgba(20,41,65,.22);transition:transform .18s ease,box-shadow .18s ease,background .18s ease}
+  .cta:hover{background:var(--cta-hover);color:var(--cta-fg);transform:translateY(-2px);box-shadow:0 12px 26px rgba(20,41,65,.28)}
+  .cta svg{width:18px;height:18px;flex:none}
+  .hero-shot{align-self:center}
 
-    html {
-      scroll-behavior: smooth;
-    }
+  /* ---------- PHONE FRAME ---------- */
+  .phone{background:#0d1826;border-radius:34px;padding:10px;box-shadow:0 22px 48px rgba(13,24,38,.34),0 3px 10px rgba(13,24,38,.24);
+    position:relative}
+  .phone::before{content:"";position:absolute;top:20px;left:50%;transform:translateX(-50%);width:34%;height:6px;border-radius:6px;
+    background:rgba(255,255,255,.14);z-index:3}
+  .screen{width:100%;aspect-ratio:9/19.5;border-radius:26px;overflow:hidden;background:#fbfaf6;color:#243f61;
+    display:flex;flex-direction:column;position:relative;font-size:12px;line-height:1.5}
+  .sbar{display:flex;justify-content:space-between;align-items:center;padding:14px 16px 6px;font-size:11px;font-weight:700;color:rgba(30,58,95,.6)}
+  .sbar .dots{display:flex;gap:3px}.sbar .dots i{width:5px;height:5px;border-radius:50%;background:rgba(30,58,95,.32)}
+  .shead{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:11px 16px;background:#1e3a5f}
+  .shead .bk{font-weight:800;font-size:15px;color:#fbfaf6}
+  .tp{font-size:10px;font-weight:800;letter-spacing:.06em;padding:3px 8px;border:1px solid rgba(251,250,246,.42);border-radius:99px;color:#fbfaf6}
+  .sbody{flex:1;overflow:hidden;padding:14px 16px}
+  .vnum{color:#c79a2f;font-weight:800;font-size:9px;vertical-align:super;margin-right:3px}
+  .vs{margin:0 0 9px;font-size:12.5px;line-height:1.62;color:#2b4a6e}
+  .hl{background:linear-gradient(transparent 55%,rgba(232,184,75,.55) 55%)}
+  .toolbar{display:flex;justify-content:space-between;align-items:center;padding:8px 5px;border-top:1px solid rgba(30,58,95,.1);background:rgba(30,58,95,.03)}
+  .tbtn{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;color:#8194ac;font-size:6.5px;font-weight:700;white-space:nowrap;letter-spacing:-.01em}
+  .tbtn svg{width:15px;height:15px}
+  .tbtn.act{color:#1e3a5f}
 
-    body {
-      margin: 0;
-      min-height: 100vh;
-      background:
-        radial-gradient(circle at top left, rgba(232, 184, 75, 0.20), transparent 30rem),
-        linear-gradient(180deg, #ffffff 0%, var(--paper) 52%, #f4f7fb 100%);
-      color: var(--ink);
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
-      line-height: 1.6;
-      letter-spacing: 0;
-    }
+  /* ---------- SECTION SCAFFOLD ---------- */
+  section{scroll-margin-top:20px}
+  .band{border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:clamp(22px,4vw,30px) 0}
+  .strip{display:grid;grid-template-columns:repeat(2,1fr)}
+  .stat{padding:16px 14px}
+  .stat:nth-child(2n){border-left:1px solid var(--line-soft)}
+  .stat:nth-child(n+3){border-top:1px solid var(--line-soft)}
+  .snum{font-weight:900;font-size:clamp(1.7rem,6vw,2.3rem);color:var(--heading);line-height:1}
+  .snum span{font-size:.5em;font-weight:800;color:var(--gold);margin-left:.15em}
+  .slab{margin-top:.5rem;font-size:.82rem;color:var(--soft);font-weight:600}
 
-    a {
-      color: inherit;
-    }
+  .sec{padding:clamp(56px,10vw,104px) 0}
+  .sec-head{max-width:30em;margin-bottom:clamp(34px,6vw,60px)}
+  .sec-title{font-weight:900;font-size:clamp(1.9rem,6.5vw,2.9rem);line-height:1.06}
+  .sec-sub{margin-top:.7rem;color:var(--soft);font-size:1.02rem}
 
-    a:focus-visible,
-    button:focus-visible {
-      outline: 3px solid rgba(232, 184, 75, 0.72);
-      outline-offset: 4px;
-    }
+  .feat{display:flex;flex-direction:column;gap:clamp(28px,5vw,48px);align-items:center}
+  .feat + .feat{margin-top:clamp(56px,9vw,104px)}
+  .feat-copy{width:100%;max-width:520px}
+  .feat-tag{font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;font-weight:800;color:var(--gold);margin:0 0 .8rem}
+  .feat-h{font-weight:900;font-size:clamp(1.4rem,5vw,2rem);line-height:1.18}
+  .feat-p{margin-top:1.1rem;font-size:1.05rem;color:var(--ink)}
+  .feat-p + .feat-p{margin-top:.95rem;padding-top:.95rem;border-top:1px solid var(--line-soft);color:var(--soft);font-size:.98rem}
+  .feat-shot{width:100%;max-width:270px;flex:none}
 
-    .page {
-      width: min(100%, 1120px);
-      margin: 0 auto;
-      padding: 28px 20px 22px;
-    }
+  /* ---------- BASIC 4 ---------- */
+  .grid4{display:grid;grid-template-columns:1fr;border-top:1px solid var(--line)}
+  .cell{padding:26px 4px 26px 0;border-bottom:1px solid var(--line-soft);display:flex;gap:16px;align-items:flex-start}
+  .chip{width:46px;height:46px;flex:none;border-radius:13px;background:var(--gold);display:grid;place-items:center;color:var(--chip-fg);
+    box-shadow:0 4px 12px rgba(232,184,75,.32)}
+  .chip svg{width:22px;height:22px}
+  .cell h4{margin:0;font-size:1.05rem;font-weight:800;color:var(--heading)}
+  .cell p{margin:.35rem 0 0;font-size:.92rem;color:var(--soft)}
 
-    .hero {
-      min-height: 72vh;
-      display: grid;
-      align-items: center;
-      gap: 36px;
-      padding: 28px 0 44px;
-    }
+  /* ---------- GALLERY ---------- */
+  .gal{display:flex;gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;padding:6px 22px 10px;margin:0 -22px;-webkit-overflow-scrolling:touch}
+  .gal::-webkit-scrollbar{height:0}
+  .gcard{flex:0 0 auto;width:200px;scroll-snap-align:center;display:flex;flex-direction:column;gap:14px}
+  .gcap{font-size:.86rem;color:var(--soft);text-align:center;padding:0 4px}
+  .gcap b{display:block;color:var(--heading);font-weight:800;font-size:.9rem;margin-bottom:2px}
 
-    .brand-mark {
-      width: 88px;
-      height: 88px;
-      display: block;
-      border-radius: 22px;
-      box-shadow: 0 16px 34px rgba(30, 58, 95, 0.22);
-    }
+  /* ---------- TRUST ---------- */
+  .trust{display:grid;grid-template-columns:1fr;gap:18px}
+  .tcard{border:1px solid var(--line);border-radius:16px;padding:clamp(24px,5vw,34px);background:var(--card)}
+  .tcard h3{font-size:1.2rem;font-weight:800;margin-bottom:.7rem}
+  .tcard p{color:var(--soft);font-size:.98rem}
 
-    .eyebrow {
-      margin: 22px 0 10px;
-      color: var(--navy);
-      font-size: 0.92rem;
-      font-weight: 800;
-    }
+  /* ---------- FAQ ---------- */
+  .faq{border-top:1px solid var(--line)}
+  details{border-bottom:1px solid var(--line-soft)}
+  summary{list-style:none;cursor:pointer;padding:20px 40px 20px 2px;position:relative;font-weight:700;font-size:1.02rem;color:var(--heading)}
+  summary::-webkit-details-marker{display:none}
+  summary::after{content:"+";position:absolute;right:6px;top:50%;transform:translateY(-50%);color:var(--gold);font-weight:800;font-size:1.5rem;line-height:1;transition:transform .2s ease}
+  details[open] summary::after{content:"\2212"}
+  details[open] summary{color:var(--gold)}
+  .ans{padding:0 40px 22px 2px;color:var(--soft);font-size:.98rem;margin:0}
 
-    h1 {
-      margin: 0;
-      color: var(--navy-deep);
-      font-size: clamp(3rem, 12vw, 5rem);
-      line-height: 0.98;
-      font-weight: 900;
-      word-break: keep-all;
-    }
+  /* ---------- QUOTE ---------- */
+  .quote{border-left:4px solid var(--gold);background:var(--gold-soft);border-radius:0 14px 14px 0;padding:clamp(28px,5vw,40px);margin:0}
+  .quote p{font-size:clamp(1.1rem,3.4vw,1.4rem);font-weight:600;color:var(--heading);line-height:1.5;max-width:34em}
+  .quote cite{display:block;margin-top:1.2rem;font-style:normal;font-size:.9rem;font-weight:700;color:var(--soft)}
+  .quote cite::before{content:"— "}
 
-    .tagline {
-      margin: 16px 0 0;
-      color: var(--navy);
-      font-size: clamp(1.35rem, 5vw, 2rem);
-      line-height: 1.32;
-      font-weight: 800;
-    }
+  /* ---------- FOOTER ---------- */
+  footer{border-top:1px solid var(--line);padding:44px 0 60px;margin-top:clamp(56px,9vw,100px)}
+  .fnav{display:flex;flex-wrap:wrap;gap:8px 22px;font-size:.9rem;font-weight:600}
+  .fnav a{text-decoration:none;color:var(--soft)}.fnav a:hover{color:var(--gold)}
+  .fbot{margin-top:20px;font-size:.82rem;color:var(--soft);display:flex;flex-wrap:wrap;gap:6px 16px;align-items:center}
+  .ver{font-size:.82rem;color:var(--soft);opacity:.85}
+  .dot{width:3px;height:3px;border-radius:50%;background:var(--line)}
+  #version-line{display:inline-flex;align-items:center;gap:16px}
+  #version-line[hidden]{display:none}
 
-    .intro {
-      max-width: 640px;
-      margin: 20px 0 0;
-      color: var(--muted);
-      font-size: 1.05rem;
-    }
+  /* ---------- SCROLL REVEAL ---------- */
+  @media (prefers-reduced-motion:no-preference){
+    .js .reveal{opacity:0;transform:translateY(44px)}
+    .js .reveal.in{opacity:1;transform:none;transition:opacity .8s ease,transform .8s cubic-bezier(.16,1,.3,1)}
+    .js .gal .gcard.reveal.in:nth-child(2){transition-delay:.09s}
+    .js .gal .gcard.reveal.in:nth-child(3){transition-delay:.18s}
+    .js .gal .gcard.reveal.in:nth-child(4){transition-delay:.27s}
+    .js .gal .gcard.reveal.in:nth-child(5){transition-delay:.36s}
+  }
 
-    .actions {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 10px;
-      margin-top: 30px;
-    }
-
-    .play-link {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 54px;
-      padding: 0 22px;
-      border-radius: 8px;
-      background: var(--navy);
-      color: #ffffff;
-      font-size: 1rem;
-      font-weight: 800;
-      text-decoration: none;
-      box-shadow: 0 14px 26px rgba(30, 58, 95, 0.24);
-      transition: transform 160ms ease, background 160ms ease, box-shadow 160ms ease;
-    }
-
-    .play-link:hover {
-      transform: translateY(-2px);
-      background: #244b7c;
-      box-shadow: 0 18px 34px rgba(30, 58, 95, 0.28);
-    }
-
-    .review-note {
-      margin: 0;
-      color: var(--muted);
-      font-size: 0.88rem;
-    }
-
-    .hero-visual {
-      display: none;
-    }
-
-    .feature-band {
-      display: grid;
-      gap: 14px;
-      margin: 0 0 46px;
-      padding: 8px 0 0;
-    }
-
-    .feature {
-      display: grid;
-      grid-template-columns: auto 1fr;
-      gap: 14px;
-      align-items: start;
-      padding: 18px 0;
-      border-top: 1px solid var(--line);
-    }
-
-    .feature:last-child {
-      border-bottom: 1px solid var(--line);
-    }
-
-    .feature-icon {
-      width: 36px;
-      height: 36px;
-      display: inline-grid;
-      place-items: center;
-      border-radius: 8px;
-      background: var(--gold-soft);
-      color: var(--navy);
-      font-size: 1rem;
-      font-weight: 900;
-    }
-
-    .feature h2 {
-      grid-column: 2;
-      margin: 0;
-      color: var(--navy-deep);
-      font-size: 1.05rem;
-      line-height: 1.35;
-      word-break: keep-all;
-    }
-
-    .feature p {
-      grid-column: 2;
-      margin: 4px 0 0;
-      color: var(--muted);
-      font-size: 0.95rem;
-    }
-
-    .footer {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      padding-top: 22px;
-      padding-bottom: 4px;
-      border-top: 1px solid var(--line);
-      color: var(--muted);
-      font-size: 0.9rem;
-    }
-
-    .footer-links {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px 12px;
-      align-items: center;
-    }
-
-    .footer a {
-      color: var(--navy);
-      font-weight: 700;
-      text-underline-offset: 4px;
-    }
-
-    .dot {
-      color: rgba(93, 106, 122, 0.62);
-    }
-
-    @media (min-width: 760px) {
-      .page {
-        padding: 34px 34px 28px;
-      }
-
-      .hero {
-        min-height: 70vh;
-        grid-template-columns: minmax(0, 1.05fr) minmax(300px, 0.95fr);
-      }
-
-      .brand-mark {
-        width: 110px;
-        height: 110px;
-        border-radius: 26px;
-      }
-
-      .hero-visual {
-        display: grid;
-        min-height: 420px;
-        place-items: center;
-        border: 1px solid var(--line);
-        border-radius: 8px;
-        background:
-          linear-gradient(145deg, rgba(255, 255, 255, 0.76), rgba(255, 243, 200, 0.52)),
-          radial-gradient(circle at 76% 28%, rgba(232, 184, 75, 0.28), transparent 16rem);
-        box-shadow: var(--shadow);
-      }
-
-      .phone {
-        width: min(78%, 320px);
-        aspect-ratio: 9 / 16;
-        display: grid;
-        align-content: center;
-        justify-items: center;
-        gap: 22px;
-        padding: 34px 26px;
-        border: 10px solid var(--navy-deep);
-        border-radius: 34px;
-        background: linear-gradient(180deg, #ffffff, #f7f2e6);
-        box-shadow: 0 30px 70px rgba(20, 41, 65, 0.25);
-      }
-
-      .phone img {
-        width: 96px;
-        height: 96px;
-        border-radius: 24px;
-      }
-
-      .phone-title {
-        color: var(--navy-deep);
-        font-size: 1.35rem;
-        font-weight: 900;
-      }
-
-      .phone-lines {
-        width: 100%;
-        display: grid;
-        gap: 10px;
-      }
-
-      .phone-lines span {
-        height: 10px;
-        border-radius: 999px;
-        background: rgba(30, 58, 95, 0.14);
-      }
-
-      .phone-lines span:nth-child(2) {
-        width: 72%;
-      }
-
-      .phone-lines span:nth-child(3) {
-        width: 86%;
-        background: rgba(232, 184, 75, 0.42);
-      }
-
-      .feature-band {
-        grid-template-columns: repeat(4, 1fr);
-        gap: 0;
-        border-top: 1px solid var(--line);
-        border-bottom: 1px solid var(--line);
-      }
-
-      .feature {
-        display: block;
-        min-height: 190px;
-        padding: 24px 22px;
-        border-top: 0;
-        border-right: 1px solid var(--line);
-      }
-
-      .feature:last-child {
-        border-right: 0;
-        border-bottom: 0;
-      }
-
-      .feature-icon {
-        margin-bottom: 18px;
-      }
-
-      .footer {
-        flex-direction: row;
-        align-items: center;
-        justify-content: space-between;
-      }
-    }
-
-    @media (prefers-color-scheme: dark) {
-      :root {
-        --paper: #0f1b29;
-        --ink: #eef3f8;
-        --muted: #b7c2d0;
-        --line: rgba(238, 243, 248, 0.18);
-        --panel: rgba(20, 41, 65, 0.72);
-        --gold-soft: rgba(232, 184, 75, 0.16);
-        --navy-deep: #f5f8fb;
-      }
-
-      body {
-        background:
-          radial-gradient(circle at top left, rgba(232, 184, 75, 0.18), transparent 28rem),
-          linear-gradient(180deg, #102338 0%, #0f1b29 62%, #0b1520 100%);
-      }
-
-      .eyebrow,
-      .tagline,
-      .footer a {
-        color: #f2c65f;
-      }
-
-      .play-link {
-        background: #e8b84b;
-        color: #102338;
-      }
-
-      .play-link:hover {
-        background: #f1c865;
-      }
-
-      .hero-visual {
-        background:
-          linear-gradient(145deg, rgba(20, 41, 65, 0.86), rgba(30, 58, 95, 0.62)),
-          radial-gradient(circle at 76% 28%, rgba(232, 184, 75, 0.22), transparent 16rem);
-      }
-
-      .phone {
-        border-color: #07101a;
-        background: linear-gradient(180deg, #182b42, #102338);
-      }
-
-      .phone-lines span {
-        background: rgba(238, 243, 248, 0.17);
-      }
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      html {
-        scroll-behavior: auto;
-      }
-
-      .play-link {
-        transition: none;
-      }
-
-      .play-link:hover {
-        transform: none;
-      }
-    }
-  </style>
+  /* ---------- RESPONSIVE ---------- */
+  @media (min-width:600px){
+    .strip{grid-template-columns:repeat(4,1fr)}
+    .stat:nth-child(2n){border-left:none}
+    .stat:not(:first-child){border-left:1px solid var(--line-soft)}
+    .stat:nth-child(n+3){border-top:none}
+    .grid4{grid-template-columns:repeat(2,1fr);column-gap:34px}
+    .trust{grid-template-columns:1fr 1fr}
+  }
+  @media (min-width:860px){
+    .hero-grid{flex-direction:row;justify-content:space-between;align-items:center;gap:56px}
+    .hero-text{flex:1}
+    .hero-shot{align-self:auto}
+    .hero-shot .phone{width:288px}
+    .feat{flex-direction:row;justify-content:space-between;gap:clamp(40px,6vw,90px)}
+    .feat.rev{flex-direction:row-reverse}
+    .feat-shot{max-width:300px}
+    .grid4{grid-template-columns:repeat(4,1fr);column-gap:30px}
+    .grid4 .cell{flex-direction:column;gap:16px;border-bottom:none;padding:8px 0}
+    .grid4 .cell:not(:first-child){border-left:1px solid var(--line-soft);padding-left:26px}
+    .gal{display:grid;grid-template-columns:repeat(5,1fr);overflow:visible;margin:0;padding:0;gap:20px}
+    .gcard{width:auto}
+  }
+  @media (prefers-reduced-motion:reduce){
+    html{scroll-behavior:auto}
+    *{transition:none!important;animation:none!important}
+  }
+</style>
 </head>
 <body>
-  <main class="page">
-    <section class="hero" aria-labelledby="title">
-      <div>
-        <img class="brand-mark" src="icon.png" width="512" height="512" alt="데일리바이블 앱 아이콘">
-        <p class="eyebrow">무료 성경 앱</p>
-        <h1 id="title">데일리바이블</h1>
+<main>
+  <!-- ① HERO -->
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div class="hero-text">
+        <img class="appicon" src="icon.png" width="512" height="512" alt="데일리바이블 앱 아이콘">
+        <p class="eyebrow" style="margin-top:20px">무료 성경 앱</p>
+        <h1 class="title">데일리바이블</h1>
         <p class="tagline">매일 읽는 무료 성경 앱</p>
-        <p class="intro">광고 없이 여러 번역본을 오프라인으로 읽고 들을 수 있습니다. 기록해 둔 형광펜, 북마크, 메모와 검색으로 매일의 읽기를 이어가세요.</p>
-        <div class="actions">
-          <a class="play-link" href="https://play.google.com/store/apps/details?id=kr.dailybible.app" rel="noopener">Google Play에서 다운로드</a>
-          <p class="review-note">현재 심사 중 · 승인되면 바로 연결됩니다</p>
-        </div>
+        <p class="intro">광고 없이 여러 번역본을 오프라인으로 읽고 들을 수 있습니다. 구절을 묶어 링크로 나누고, 오래 남긴 형광펜과 메모를 파일로 물려줄 수도 있습니다.</p>
+        <a class="cta" href="https://play.google.com/store/apps/details?id=kr.dailybible.app" rel="noopener" aria-label="Google Play에서 데일리바이블 다운로드">
+          <svg viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M4 3.2c-.3.2-.5.6-.5 1.1v15.4c0 .5.2.9.5 1.1l8.4-8.8L4 3.2zm10 6.6l2.9-1.7-9-5.2c-.4-.2-.8-.2-1.1 0l7.2 6.9zm4.7 1.3l-2.9-1.7-2.4 2.3 2.4 2.3 2.9-1.7c.7-.4.7-1.1 0-1.5zm-15.7 9c.3.2.7.2 1.1 0l9-5.2-2.9-1.7-7.2 6.9z"/></svg>
+          Google Play에서 다운로드
+        </a>
       </div>
-
-      <div class="hero-visual" aria-hidden="true">
-        <div class="phone">
-          <img src="icon.png" width="512" height="512" alt="">
-          <div class="phone-title">데일리바이블</div>
-          <div class="phone-lines">
-            <span></span>
-            <span></span>
-            <span></span>
+      <div class="hero-shot reveal">
+        <div class="phone" style="width:248px" aria-hidden="true">
+          <div class="screen on">
+            <div class="sbar"><span>12:00</span><span class="dots"><i></i><i></i><i></i></span></div>
+            <div class="shead"><span class="bk">창세기 1장</span><span class="tp">개역한글</span></div>
+            <div class="sbody">
+              <p class="vs"><span class="vnum">1</span>태초에 하나님이 천지를 창조하시니라</p>
+              <p class="vs"><span class="vnum">2</span>땅이 혼돈하고 공허하며 흑암이 깊음 위에 있고 하나님의 신은 수면에 운행하시니라</p>
+              <p class="vs"><span class="vnum">3</span>하나님이 가라사대 빛이 있으라 하시매 빛이 있었고</p>
+              <p class="vs"><span class="vnum">4</span><span class="hl">그 빛이 하나님의 보시기에 좋았더라</span></p>
+              <p class="vs"><span class="vnum">5</span>빛을 낮이라 칭하시고 어두움을 밤이라 칭하시니라</p>
+            </div>
+            <div class="toolbar">
+              <span class="tbtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="14,7 9,12 14,17"/></svg>이전장</span>
+              <span class="tbtn act"><svg viewBox="0 0 24 24" fill="currentColor"><polygon points="9,6 18,12 9,18"/></svg>듣기</span>
+              <span class="tbtn"><svg viewBox="0 0 24 24" fill="currentColor"><rect x="5" y="9" width="14" height="7" rx="2"/></svg>형광펜</span>
+              <span class="tbtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="6" y1="8" x2="18" y2="8"/><line x1="6" y1="12" x2="18" y2="12"/><line x1="6" y1="16" x2="13" y2="16"/></svg>메모</span>
+              <span class="tbtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="7" cy="12" r="2.2"/><circle cx="17" cy="6.5" r="2.2"/><circle cx="17" cy="17.5" r="2.2"/><line x1="8.9" y1="11" x2="15.1" y2="7.6"/><line x1="8.9" y1="13" x2="15.1" y2="16.4"/></svg>공유</span>
+              <span class="tbtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="12" y1="6" x2="12" y2="18"/><line x1="6" y1="12" x2="18" y2="12"/></svg>담기</span>
+              <span class="tbtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="10,7 15,12 10,17"/></svg>다음장</span>
+            </div>
           </div>
         </div>
       </div>
-    </section>
-
-    <section class="feature-band" aria-label="주요 기능">
-      <article class="feature">
-        <span class="feature-icon">A</span>
-        <h2>여러 번역본</h2>
-        <p>익숙한 번역본을 골라 읽고 필요한 때 바로 바꿔 볼 수 있습니다.</p>
-      </article>
-      <article class="feature">
-        <span class="feature-icon">O</span>
-        <h2>완전 오프라인</h2>
-        <p>한 번 설치하면 네트워크가 없어도 읽기 흐름을 이어갈 수 있습니다.</p>
-      </article>
-      <article class="feature">
-        <span class="feature-icon">T</span>
-        <h2>성경 듣기(TTS)</h2>
-        <p>이동 중에도 기기의 음성 읽기 기능으로 본문을 들을 수 있습니다.</p>
-      </article>
-      <article class="feature">
-        <span class="feature-icon">M</span>
-        <h2>형광펜/북마크/메모/검색</h2>
-        <p>남겨 둔 표시와 메모를 다시 찾고 필요한 내용을 빠르게 검색합니다.</p>
-      </article>
-    </section>
-  </main>
-
-  <footer class="page footer">
-    <div class="footer-links">
-      <a href="https://guinnessnet.github.io/dailybible-privacy/" rel="noopener">개인정보처리방침</a>
-      <span class="dot">·</span>
-      <a href="mailto:kjh@maipharm.com">kjh@maipharm.com</a>
     </div>
-    <div>© 2026 데일리바이블</div>
+  </section>
+
+  <!-- ② NUMBER STRIP -->
+  <section class="band" aria-label="핵심 숫자">
+    <div class="wrap">
+      <div class="strip">
+        <div class="stat"><div class="snum">7<span>개</span></div><p class="slab">번역본 · 한·영·중·일·헬라어·히브리어</p></div>
+        <div class="stat"><div class="snum">66<span>권</span></div><p class="slab">전체 · 설치 후 완전 오프라인</p></div>
+        <div class="stat"><div class="snum">0<span>개</span></div><p class="slab">광고 · 인앱결제·회원가입 없음</p></div>
+        <div class="stat"><div class="snum">0<span>개</span></div><p class="slab">민감 권한 · 인터넷 권한 1개(업데이트 확인)</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ③ SIGNATURE FEATURES -->
+  <section class="sec" aria-label="시그니처 기능">
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="eyebrow">Signature</p>
+        <h2 class="sec-title">데일리바이블에만 있는 것</h2>
+      </div>
+
+      <!-- A. 구절 묶음 공유 (텍스트 좌 / 샷 우) -->
+      <div class="feat">
+        <div class="feat-copy">
+          <p class="feat-tag">구절 묶음 공유</p>
+          <h3 class="feat-h">설교 본문과 참조 구절을, 링크 하나로</h3>
+          <p class="feat-p">여러 구절을 묶어 링크 하나로 전달하세요. 설교 준비와 소그룹 나눔에서, 받은 사람은 링크를 여는 순간 앱에서 구절 묶음이 그대로 펼쳐집니다.</p>
+          <p class="feat-p">묶음은 서버에 저장되지 않습니다. 구절 목록이 링크 자체에 담겨 있어, 누구의 서버도 거치지 않습니다.</p>
+        </div>
+        <div class="feat-shot reveal">
+          <div class="phone" aria-hidden="true">
+            <div class="screen">
+              <div class="sbar"><span>12:00</span><span class="dots"><i></i><i></i><i></i></span></div>
+              <div class="shead"><span class="bk">구절 묶음</span><span class="tp">3개</span></div>
+              <div class="sbody">
+                <div style="display:flex;flex-direction:column;gap:9px">
+                  <div style="display:flex;align-items:center;gap:9px;padding:11px 12px;background:rgba(30,58,95,.05);border-radius:10px;border:1px solid rgba(30,58,95,.08)"><span style="font-weight:800;color:#1e3a5f">요한복음 1:1–5</span></div>
+                  <div style="display:flex;align-items:center;gap:9px;padding:11px 12px;background:rgba(30,58,95,.05);border-radius:10px;border:1px solid rgba(30,58,95,.08)"><span style="font-weight:800;color:#1e3a5f">시편 23편</span></div>
+                  <div style="display:flex;align-items:center;gap:9px;padding:11px 12px;background:rgba(30,58,95,.05);border-radius:10px;border:1px solid rgba(30,58,95,.08)"><span style="font-weight:800;color:#1e3a5f">로마서 8:28</span></div>
+                  <div style="display:flex;align-items:center;gap:9px;padding:11px 12px;background:rgba(232,184,75,.14);border-radius:10px;border:1px dashed rgba(232,184,75,.6);color:#8a6a1f;font-weight:700">＋ 구절 추가</div>
+                </div>
+                <div style="margin-top:16px;padding:12px;border-radius:10px;background:#0d1826;color:#cdd7e4;font-size:10.5px;font-family:ui-monospace,Menlo,monospace;word-break:break-all;line-height:1.5">https://dailybible.kr/s/G9c…</div>
+              </div>
+              <div class="toolbar" style="padding:12px">
+                <span style="flex:1;text-align:center;background:#1e3a5f;color:#fbfaf6;font-weight:800;padding:10px;border-radius:10px;font-size:12px">링크 만들어 공유하기</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- B. 기록 내보내기·가져오기 (샷 좌 / 텍스트 우 — 교차) -->
+      <div class="feat rev">
+        <div class="feat-copy">
+          <p class="feat-tag">기록 내보내기 · 가져오기</p>
+          <h3 class="feat-h">밑줄 그은 성경을 물려주듯이</h3>
+          <p class="feat-p">몇 년을 두고 남긴 형광펜과 메모를 파일 하나로 내보낼 수 있습니다. 자녀의 폰에 그대로 옮겨 주거나, 성경공부 모임에서 인도자의 주석을 함께 볼 수도 있습니다.</p>
+          <p class="feat-p">종이 성경의 손때 묻은 밑줄처럼, 기록도 물려줄 수 있어야 한다고 믿습니다.</p>
+        </div>
+        <div class="feat-shot reveal">
+          <div class="phone" aria-hidden="true">
+            <div class="screen">
+              <div class="sbar"><span>12:00</span><span class="dots"><i></i><i></i><i></i></span></div>
+              <div class="shead"><span class="bk">내 기록</span><span class="tp">백업</span></div>
+              <div class="sbody">
+                <div style="display:flex;flex-direction:column;gap:2px;margin-bottom:16px">
+                  <div style="display:flex;justify-content:space-between;padding:9px 0;border-bottom:1px solid rgba(30,58,95,.1)"><span>형광펜</span><b style="color:#142941">218</b></div>
+                  <div style="display:flex;justify-content:space-between;padding:9px 0;border-bottom:1px solid rgba(30,58,95,.1)"><span>메모</span><b style="color:#142941">64</b></div>
+                  <div style="display:flex;justify-content:space-between;padding:9px 0;border-bottom:1px solid rgba(30,58,95,.1)"><span>북마크</span><b style="color:#142941">37</b></div>
+                </div>
+                <div style="display:flex;align-items:center;gap:11px;padding:13px;border:1px solid rgba(30,58,95,.14);border-radius:12px;background:#fff">
+                  <span style="width:34px;height:34px;border-radius:8px;background:rgba(232,184,75,.2);display:grid;place-items:center;color:#8a6a1f;font-weight:800;font-size:9px">JSON</span>
+                  <div><div style="font-weight:800;color:#142941;font-size:11.5px">내-기록-백업.json</div><div style="color:rgba(30,58,95,.55);font-size:10px">319개 기록 · 2026-07-07</div></div>
+                </div>
+                <div style="display:flex;gap:9px;margin-top:14px">
+                  <span style="flex:1;text-align:center;background:#1e3a5f;color:#fbfaf6;font-weight:800;padding:10px;border-radius:10px;font-size:11.5px">내보내기</span>
+                  <span style="flex:1;text-align:center;border:1px solid rgba(30,58,95,.25);color:#1e3a5f;font-weight:800;padding:10px;border-radius:10px;font-size:11.5px">가져오기</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ④ BASIC FEATURES -->
+  <section class="sec" style="padding-top:0" aria-label="기본 기능">
+    <div class="wrap">
+      <div class="sec-head"><p class="eyebrow">Basics</p><h2 class="sec-title">기본에 충실한 성경 앱</h2></div>
+      <div class="grid4">
+        <div class="cell">
+          <span class="chip" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="5" y1="7" x2="19" y2="7"/><line x1="5" y1="12" x2="15" y2="12"/><line x1="5" y1="17" x2="17" y2="17"/></svg></span>
+          <div><h4>여러 번역본</h4><p>한국어부터 원어까지 7개 번역본을 골라 읽고, 필요할 때 바로 바꿉니다.</p></div>
+        </div>
+        <div class="cell">
+          <span class="chip" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="2.4" fill="currentColor" stroke="none"/></svg></span>
+          <div><h4>완전 오프라인</h4><p>설치하면 성경 전체가 기기에 담겨 네트워크 없이 동작합니다.</p></div>
+        </div>
+        <div class="cell">
+          <span class="chip" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><polygon points="8,5 19,12 8,19"/></svg></span>
+          <div><h4>성경 듣기 (TTS)</h4><p>이동 중에는 눈 대신 귀로, 본문을 소리 내어 읽어 줍니다.</p></div>
+        </div>
+        <div class="cell">
+          <span class="chip" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="5" width="14" height="14" rx="4"/></svg></span>
+          <div><h4>형광펜·북마크·메모·검색</h4><p>남기고 싶은 구절을 표시하고, 필요할 때 바로 찾습니다.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ⑤ GALLERY -->
+  <section class="sec" style="padding-top:0" aria-label="앱 화면 미리보기">
+    <div class="wrap">
+      <div class="sec-head"><p class="eyebrow">Screens</p><h2 class="sec-title">화면으로 먼저 보기</h2></div>
+    </div>
+    <div class="wrap" style="padding-right:0">
+      <div class="gal">
+        <!-- 1 번역본 선택 -->
+        <div class="gcard reveal"><div class="phone" aria-hidden="true"><div class="screen">
+          <div class="sbar"><span>12:00</span><span class="dots"><i></i><i></i><i></i></span></div>
+          <div class="shead"><span class="bk">번역본</span></div>
+          <div class="sbody"><div style="display:flex;flex-direction:column;gap:7px;font-size:12px">
+            <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 12px;background:rgba(232,184,75,.16);border:1px solid rgba(232,184,75,.5);border-radius:9px;font-weight:800;color:#142941">개역한글 <span style="color:#c79a2f">✓</span></div>
+            <div style="padding:10px 12px;background:rgba(30,58,95,.05);border-radius:9px">World English Bible</div>
+            <div style="padding:10px 12px;background:rgba(30,58,95,.05);border-radius:9px">中文</div>
+            <div style="padding:10px 12px;background:rgba(30,58,95,.05);border-radius:9px">日本語</div>
+            <div style="padding:10px 12px;background:rgba(30,58,95,.05);border-radius:9px">Ἑλληνικά · 헬라어</div>
+            <div style="padding:10px 12px;background:rgba(30,58,95,.05);border-radius:9px">עברית · 히브리어</div>
+          </div></div>
+        </div></div><p class="gcap"><b>번역본 선택</b>원어 성경까지 7개 번역본</p></div>
+
+        <!-- 2 형광펜·메모 -->
+        <div class="gcard reveal"><div class="phone" aria-hidden="true"><div class="screen">
+          <div class="sbar"><span>12:00</span><span class="dots"><i></i><i></i><i></i></span></div>
+          <div class="shead"><span class="bk">시편 23편</span><span class="tp">개역한글</span></div>
+          <div class="sbody">
+            <p class="vs"><span class="vnum">1</span><span class="hl">여호와는 나의 목자시니 내가 부족함이 없으리로다</span></p>
+            <p class="vs"><span class="vnum">2</span>그가 나를 푸른 초장에 누이시며 쉴만한 물 가으로 인도하시는도다</p>
+            <div style="margin:4px 0 10px;padding:9px 11px;border-left:3px solid #e8b84b;background:rgba(232,184,75,.12);border-radius:0 8px 8px 0;font-size:10.5px;color:#6f5a2a;font-style:italic">메모 · 힘들 때마다 다시 읽는 구절</div>
+            <p class="vs"><span class="vnum">3</span>내 영혼을 소생시키시고</p>
+          </div>
+        </div></div><p class="gcap"><b>형광펜·메모</b>남기고 싶은 구절에 바로 기록</p></div>
+
+        <!-- 3 TTS -->
+        <div class="gcard reveal"><div class="phone" aria-hidden="true"><div class="screen">
+          <div class="sbar"><span>12:00</span><span class="dots"><i></i><i></i><i></i></span></div>
+          <div class="shead"><span class="bk">마태복음 5장</span><span class="tp">듣기</span></div>
+          <div class="sbody">
+            <p class="vs"><span class="vnum">3</span><span class="hl">심령이 가난한 자는 복이 있나니 천국이 저희 것임이요</span></p>
+            <p class="vs"><span class="vnum">4</span>애통하는 자는 복이 있나니 저희가 위로를 받을 것임이요</p>
+          </div>
+          <div class="toolbar">
+            <span class="tbtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="14,7 9,12 14,17"/></svg>이전장</span>
+            <span class="tbtn act"><svg viewBox="0 0 24 24" fill="currentColor"><polygon points="9,6 18,12 9,18"/></svg>듣기</span>
+            <span class="tbtn"><svg viewBox="0 0 24 24" fill="currentColor"><rect x="5" y="9" width="14" height="7" rx="2"/></svg>형광펜</span>
+            <span class="tbtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="6" y1="8" x2="18" y2="8"/><line x1="6" y1="12" x2="18" y2="12"/><line x1="6" y1="16" x2="13" y2="16"/></svg>메모</span>
+            <span class="tbtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="7" cy="12" r="2.2"/><circle cx="17" cy="6.5" r="2.2"/><circle cx="17" cy="17.5" r="2.2"/><line x1="8.9" y1="11" x2="15.1" y2="7.6"/><line x1="8.9" y1="13" x2="15.1" y2="16.4"/></svg>공유</span>
+            <span class="tbtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="12" y1="6" x2="12" y2="18"/><line x1="6" y1="12" x2="18" y2="12"/></svg>담기</span>
+            <span class="tbtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="10,7 15,12 10,17"/></svg>다음장</span>
+          </div>
+        </div></div><p class="gcap"><b>성경 듣기</b>이동 중엔 귀로 듣기</p></div>
+
+        <!-- 4 검색 -->
+        <div class="gcard reveal"><div class="phone" aria-hidden="true"><div class="screen">
+          <div class="sbar"><span>12:00</span><span class="dots"><i></i><i></i><i></i></span></div>
+          <div class="shead"><span class="bk">검색</span></div>
+          <div class="sbody">
+            <div style="display:flex;align-items:center;gap:8px;padding:9px 12px;background:rgba(30,58,95,.06);border-radius:10px;margin-bottom:10px"><svg viewBox="0 0 24 24" width="14" fill="none" stroke="#4a648a" stroke-width="2"><circle cx="11" cy="11" r="6"/><line x1="15.5" y1="15.5" x2="20" y2="20"/></svg><span style="font-weight:700;color:#142941">사랑</span></div>
+            <div style="display:flex;gap:6px;font-size:10px;margin-bottom:12px"><span style="padding:4px 10px;background:#1e3a5f;color:#fbfaf6;border-radius:99px;font-weight:700">전체</span><span style="padding:4px 10px;background:rgba(30,58,95,.06);border-radius:99px">구약</span><span style="padding:4px 10px;background:rgba(30,58,95,.06);border-radius:99px">신약</span></div>
+            <div style="display:flex;flex-direction:column;gap:10px;font-size:11px;color:#2b4a6e">
+              <div><b style="color:#c79a2f;font-size:10px">요한복음 3:16</b><br>하나님이 세상을 이처럼 <span class="hl">사랑</span>하사 독생자를 주셨으니…</div>
+              <div><b style="color:#c79a2f;font-size:10px">고린도전서 13:4</b><br><span class="hl">사랑</span>은 오래 참고 <span class="hl">사랑</span>은 온유하며…</div>
+              <div><b style="color:#c79a2f;font-size:10px">요한일서 4:8</b><br>하나님은 <span class="hl">사랑</span>이심이라</div>
+            </div>
+          </div>
+        </div></div><p class="gcap"><b>검색</b>전체·구약·신약에서 한 번에</p></div>
+
+        <!-- 5 책/장 선택 -->
+        <div class="gcard reveal"><div class="phone" aria-hidden="true"><div class="screen">
+          <div class="sbar"><span>12:00</span><span class="dots"><i></i><i></i><i></i></span></div>
+          <div class="shead"><span class="bk">책 · 장</span></div>
+          <div class="sbody">
+            <div style="font-size:9px;font-weight:800;letter-spacing:.1em;color:rgba(30,58,95,.5);margin-bottom:7px">신약</div>
+            <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:5px;font-size:10px;margin-bottom:14px">
+              <span style="padding:8px 4px;text-align:center;background:#1e3a5f;color:#fbfaf6;border-radius:7px;font-weight:700">마태</span>
+              <span style="padding:8px 4px;text-align:center;background:rgba(30,58,95,.05);border-radius:7px">마가</span>
+              <span style="padding:8px 4px;text-align:center;background:rgba(30,58,95,.05);border-radius:7px">누가</span>
+              <span style="padding:8px 4px;text-align:center;background:rgba(30,58,95,.05);border-radius:7px">요한</span>
+              <span style="padding:8px 4px;text-align:center;background:rgba(30,58,95,.05);border-radius:7px">사도</span>
+              <span style="padding:8px 4px;text-align:center;background:rgba(30,58,95,.05);border-radius:7px">로마</span>
+            </div>
+            <div style="font-size:9px;font-weight:800;letter-spacing:.1em;color:rgba(30,58,95,.5);margin-bottom:7px">마태복음 · 장</div>
+            <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:5px;font-size:10px">
+              <span style="padding:7px 0;text-align:center;background:rgba(232,184,75,.2);border:1px solid rgba(232,184,75,.5);border-radius:6px;font-weight:800;color:#142941">1</span>
+              <span style="padding:7px 0;text-align:center;background:rgba(30,58,95,.05);border-radius:6px">2</span>
+              <span style="padding:7px 0;text-align:center;background:rgba(30,58,95,.05);border-radius:6px">3</span>
+              <span style="padding:7px 0;text-align:center;background:rgba(30,58,95,.05);border-radius:6px">4</span>
+              <span style="padding:7px 0;text-align:center;background:rgba(30,58,95,.05);border-radius:6px">5</span>
+              <span style="padding:7px 0;text-align:center;background:rgba(30,58,95,.05);border-radius:6px">6</span>
+              <span style="padding:7px 0;text-align:center;background:rgba(30,58,95,.05);border-radius:6px">7</span>
+              <span style="padding:7px 0;text-align:center;background:rgba(30,58,95,.05);border-radius:6px">8</span>
+              <span style="padding:7px 0;text-align:center;background:rgba(30,58,95,.05);border-radius:6px">9</span>
+              <span style="padding:7px 0;text-align:center;background:rgba(30,58,95,.05);border-radius:6px">10</span>
+            </div>
+          </div>
+        </div></div><p class="gcap"><b>책·장 이동</b>두 탭이면 닿는 책·장 이동</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ⑥ TRUST -->
+  <section class="sec" style="padding-top:0" aria-label="믿고 쓸 수 있는 이유">
+    <div class="wrap">
+      <div class="trust">
+        <div class="tcard">
+          <h3>왜 무료인가요?</h3>
+          <p>데일리바이블은 광고도, 인앱결제도, 회원가입도 없습니다. 수익 모델 자체가 없는 개인 프로젝트로 시작했고, 앞으로도 무료로 유지됩니다.</p>
+        </div>
+        <div class="tcard">
+          <h3>기록은 기기에만 저장됩니다</h3>
+          <p>형광펜·북마크·메모는 회원가입 없이 내 기기에만 저장되고, 어디로도 전송되지 않습니다. 애초에 데이터를 받을 서버가 없습니다.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ⑦ FAQ -->
+  <section class="sec" style="padding-top:0" aria-label="자주 묻는 질문">
+    <div class="wrap">
+      <div class="sec-head"><p class="eyebrow">FAQ</p><h2 class="sec-title">자주 묻는 질문</h2></div>
+      <div class="faq">
+        <details><summary>정말 무료인가요? 광고는 없나요?</summary><p class="ans">네. 광고·인앱결제·유료 기능이 전혀 없는 완전 무료 앱입니다.</p></details>
+        <details><summary>오프라인에서는 어디까지 되나요?</summary><p class="ans">설치 시 성경 전체가 담겨 읽기·검색·기록이 전부 네트워크 없이 동작합니다. 인터넷은 새 버전 확인에만 사용합니다.</p></details>
+        <details><summary>회원가입 없이 내 기록은 어디에 저장되나요?</summary><p class="ans">기기에만 저장됩니다. 앱을 삭제하면 기록도 사라지므로, 내보내기 백업을 권장합니다.</p></details>
+        <details><summary>구절 묶음 링크는 어디에 저장되나요?</summary><p class="ans">어디에도 저장되지 않습니다. 구절 목록이 링크 문자열 자체에 담겨 있습니다.</p></details>
+        <details><summary>내 메모를 다른 기기나 가족에게 옮길 수 있나요?</summary><p class="ans">내보내기/가져오기 기능으로 옮길 수 있습니다.</p></details>
+        <details><summary>개역개정·NIV 같은 번역본은 왜 없나요?</summary><p class="ans">저작권이 있는 번역본은 제공·배포할 수 없습니다. 본인이 적법하게 보유한 파일은 직접 가져오기로 사용할 수 있습니다. 자세한 방법은 <a href="/docs/translation-guide.html">역본 가이드</a>를 참고하세요.</p></details>
+        <details><summary>아이폰(iOS) 버전은 없나요?</summary><p class="ans">준비 중입니다. 지금은 Google Play에서 먼저 만나실 수 있습니다.</p></details>
+        <details><summary>앱이 요구하는 권한은 무엇인가요?</summary><p class="ans">인터넷 1개(업데이트 확인용)뿐입니다. 카메라·위치·연락처 등 민감 권한은 없습니다.</p></details>
+      </div>
+    </div>
+  </section>
+
+  <!-- ⑧ MAKER QUOTE -->
+  <section class="sec" style="padding-top:0" aria-label="만든 사람의 한마디">
+    <div class="wrap">
+      <blockquote class="quote">
+        <p>광고와 회원가입 없이, 매일 성경 읽는 일에만 집중할 수 있는 앱이 하나쯤 있었으면 해서 만들었습니다. 오래 남긴 밑줄과 메모가 다음 사람에게 건너갈 수 있는 성경이 되길 바랍니다.</p>
+        <cite>데일리바이블을 만들고 있는 개발자 드림</cite>
+      </blockquote>
+    </div>
+  </section>
+
+  <!-- ⑨ FOOTER -->
+  <footer>
+    <div class="wrap">
+      <nav class="fnav" aria-label="푸터">
+        <a href="https://guinnessnet.github.io/dailybible-privacy/" rel="noopener">개인정보처리방침</a>
+        <a href="mailto:kjh@maipharm.com">문의: kjh@maipharm.com</a>
+      </nav>
+      <div class="fbot">
+        <span>© 2026 데일리바이블</span>
+        <span id="version-line" hidden>
+          <span class="dot" aria-hidden="true"></span>
+          <span class="ver"></span>
+        </span>
+      </div>
+    </div>
   </footer>
+</main>
+<script>
+  (function () {
+    document.documentElement.classList.add('js');
+    var targets = document.querySelectorAll('.reveal');
+    if (!('IntersectionObserver' in window)) {
+      targets.forEach(function (t) { t.classList.add('in'); });
+      return;
+    }
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+      });
+    }, { threshold: 0.15, rootMargin: '0px 0px -8% 0px' });
+    targets.forEach(function (t) {
+      if (!t.closest('.gal')) io.observe(t);
+    });
+    // 갤러리는 가로 스크롤이라 개별 관찰 시 화면 밖 카드가 안 뜸 — 섹션 단위로 한꺼번에
+    var gal = document.querySelector('.gal');
+    if (gal) {
+      var gio = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          if (e.isIntersecting) {
+            gal.querySelectorAll('.reveal').forEach(function (c) { c.classList.add('in'); });
+            gio.unobserve(gal);
+          }
+        });
+      }, { threshold: 0.1 });
+      gio.observe(gal);
+    }
+  })();
+</script>
+<script>
+  (function () {
+    fetch('https://api.github.com/repos/guinnessNet/dailybible-apk-releases/releases/latest')
+      .then(function (r) { return r.ok ? r.json() : Promise.reject(new Error(String(r.status))); })
+      .then(function (rel) {
+        if (!rel || !rel.tag_name) return;
+        var line = document.getElementById('version-line');
+        line.querySelector('.ver').textContent = '최신 버전 ' + rel.tag_name;
+        line.hidden = false;
+      })
+      .catch(function () { /* 릴리즈 조회 실패 시 버전 라인 숨김 유지 */ });
+  })();
+</script>
 </body>
 </html>
