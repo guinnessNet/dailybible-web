@@ -55,6 +55,30 @@
   h1,h2,h3{color:var(--heading);margin:0;letter-spacing:-.01em}
   p{margin:0}
 
+  /* ---------- NAVBAR ---------- */
+  .nav{position:sticky;top:0;z-index:50;border-bottom:1px solid var(--line);
+    background:color-mix(in srgb, var(--bg) 82%, transparent);
+    -webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px)}
+  .nav-in{display:flex;align-items:center;gap:12px;min-height:56px}
+  .nav-brand{display:inline-flex;align-items:center;gap:8px;flex:none;
+    font-weight:900;color:var(--heading);text-decoration:none}
+  .nav-brand img{width:28px;height:28px;border-radius:7px;display:block}
+  .nav-brand span{display:none}
+  .nav-links{display:flex;gap:13px;margin-left:auto;font-size:.85rem;font-weight:700}
+  .nav-links a{color:var(--soft);text-decoration:none;white-space:nowrap}
+  .nav-links a:hover{color:var(--gold)}
+  .nav-cta{flex:none;background:var(--cta-bg);color:var(--cta-fg);white-space:nowrap;
+    font-size:.82rem;font-weight:800;padding:.55em 1.05em;border-radius:99px;text-decoration:none;
+    transition:background .18s ease}
+  .nav-cta:hover{background:var(--cta-hover);color:var(--cta-fg)}
+  .nav-links .label-d{display:none}
+  @media (min-width:600px){
+    .nav-brand span{display:inline}
+    .nav-links{gap:22px;font-size:.9rem}
+    .nav-links .label-m{display:none}
+    .nav-links .label-d{display:inline}
+  }
+
   /* ---------- HERO ---------- */
   .hero{padding:clamp(48px,9vw,92px) 0 clamp(40px,7vw,72px)}
   .hero-grid{display:flex;flex-direction:column;gap:clamp(32px,6vw,56px);align-items:flex-start}
@@ -92,7 +116,7 @@
   .tbtn.act{color:#1e3a5f}
 
   /* ---------- SECTION SCAFFOLD ---------- */
-  section{scroll-margin-top:20px}
+  section{scroll-margin-top:72px}
   .band{border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:clamp(22px,4vw,30px) 0}
   .strip{display:grid;grid-template-columns:repeat(2,1fr)}
   .stat{padding:16px 14px}
@@ -204,6 +228,21 @@
 </style>
 </head>
 <body>
+<header class="nav">
+  <div class="wrap nav-in">
+    <a class="nav-brand" href="#" aria-label="맨 위로">
+      <img src="icon.png" alt="">
+      <span>데일리바이블</span>
+    </a>
+    <nav class="nav-links" aria-label="페이지 내 이동">
+      <a href="#features">기능</a>
+      <a href="#screens">화면</a>
+      <a href="#trust"><span class="label-m">가격</span><span class="label-d">왜 무료인가요</span></a>
+      <a href="#faq">FAQ</a>
+    </nav>
+    <a class="nav-cta" href="https://play.google.com/store/apps/details?id=kr.dailybible.app" rel="noopener">다운로드</a>
+  </div>
+</header>
 <main>
   <!-- ① HERO -->
   <section class="hero">
@@ -259,7 +298,7 @@
   </section>
 
   <!-- ③ SIGNATURE FEATURES -->
-  <section class="sec" aria-label="시그니처 기능">
+  <section class="sec" id="features" aria-label="시그니처 기능">
     <div class="wrap">
       <div class="sec-head">
         <p class="eyebrow">Signature</p>
@@ -357,7 +396,7 @@
   </section>
 
   <!-- ⑤ GALLERY -->
-  <section class="sec" style="padding-top:0" aria-label="앱 화면 미리보기">
+  <section class="sec" id="screens" style="padding-top:0" aria-label="앱 화면 미리보기">
     <div class="wrap">
       <div class="sec-head"><p class="eyebrow">Screens</p><h2 class="sec-title">화면으로 먼저 보기</h2></div>
     </div>
@@ -457,7 +496,7 @@
   </section>
 
   <!-- ⑥ TRUST -->
-  <section class="sec" style="padding-top:0" aria-label="믿고 쓸 수 있는 이유">
+  <section class="sec" id="trust" style="padding-top:0" aria-label="믿고 쓸 수 있는 이유">
     <div class="wrap">
       <div class="trust">
         <div class="tcard">
@@ -473,7 +512,7 @@
   </section>
 
   <!-- ⑦ FAQ -->
-  <section class="sec" style="padding-top:0" aria-label="자주 묻는 질문">
+  <section class="sec" id="faq" style="padding-top:0" aria-label="자주 묻는 질문">
     <div class="wrap">
       <div class="sec-head"><p class="eyebrow">FAQ</p><h2 class="sec-title">자주 묻는 질문</h2></div>
       <div class="faq">
