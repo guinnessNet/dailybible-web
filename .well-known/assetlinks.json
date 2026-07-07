@@ -1,0 +1,13 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "kr.dailybible.app",
+      "sha256_cert_fingerprints": [
+        "72:9C:2D:D6:A3:21:46:08:46:17:24:2D:B3:21:5F:3F:EC:7A:98:84:B9:B3:73:AD:A3:0A:CB:09:B8:86:72:4D",
+        "6A:92:5E:68:23:15:AD:04:BC:6B:B7:EE:50:1A:6D:09:8D:5D:A0:39:D5:15:E8:AE:B3:51:4F:4F:03:FA:04:43"
+      ]
+    }
+  }
+]
