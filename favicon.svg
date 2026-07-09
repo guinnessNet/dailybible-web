@@ -1,19 +1,42 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
   <defs>
-    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#1e3a5f"/>
-      <stop offset="100%" style="stop-color:#2d5a8e"/>
+    <radialGradient id="glow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" style="stop-color:#ffd76a;stop-opacity:0.75"/>
+      <stop offset="55%" style="stop-color:#f5b429;stop-opacity:0.18"/>
+      <stop offset="100%" style="stop-color:#f5b429;stop-opacity:0"/>
+    </radialGradient>
+    <linearGradient id="sun" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#fff3c4"/>
+      <stop offset="100%" style="stop-color:#f0a91f"/>
     </linearGradient>
+    <clipPath id="above">
+      <rect x="0" y="0" width="64" height="34"/>
+    </clipPath>
   </defs>
-  <rect width="64" height="64" rx="14" fill="url(#bg)"/>
-  <!-- 책 모양 -->
-  <g transform="translate(32,30)" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-    <!-- 왼쪽 페이지 -->
-    <path d="M-2,-14 C-2,-14 -16,-16 -18,-12 L-18,12 C-16,8 -2,10 -2,10"/>
-    <!-- 오른쪽 페이지 -->
-    <path d="M2,-14 C2,-14 16,-16 18,-12 L18,12 C16,8 2,10 2,10"/>
-    <!-- 중앙 십자가 -->
-    <line x1="0" y1="-8" x2="0" y2="4" stroke-width="2"/>
-    <line x1="-4" y1="-4" x2="4" y2="-4" stroke-width="2"/>
+
+  <rect width="64" height="64" rx="14" fill="#0d284e"/>
+
+  <!-- 해·광선: 책 뒤에서 떠오르므로 위쪽만 보이게 클립 -->
+  <g clip-path="url(#above)">
+    <circle cx="32" cy="32" r="20" fill="url(#glow)"/>
+    <g stroke="#f7c53d" stroke-width="1.1" stroke-linecap="round">
+      <line x1="32" y1="32" x2="32" y2="7"/>
+      <line x1="32" y1="32" x2="24" y2="9"/>
+      <line x1="32" y1="32" x2="40" y2="9"/>
+      <line x1="32" y1="32" x2="17" y2="14"/>
+      <line x1="32" y1="32" x2="47" y2="14"/>
+      <line x1="32" y1="32" x2="12" y2="21"/>
+      <line x1="32" y1="32" x2="52" y2="21"/>
+      <line x1="32" y1="32" x2="9"  y2="30"/>
+      <line x1="32" y1="32" x2="55" y2="30"/>
+    </g>
+    <circle cx="32" cy="32" r="7.5" fill="url(#sun)"/>
   </g>
+
+  <!-- 펼친 책 -->
+  <g stroke="#f0a91f" stroke-width="1.6" stroke-linejoin="round">
+    <path d="M32,38 C26,32 17,30 9,32 L14,50 C22,48.5 28,50 32,54 Z" fill="#fdf6e3"/>
+    <path d="M32,38 C38,32 47,30 55,32 L50,50 C42,48.5 36,50 32,54 Z" fill="#fdf6e3"/>
+  </g>
+  <path d="M32,38 L32,54" stroke="#16355e" stroke-width="1.5" stroke-linecap="round"/>
 </svg>
