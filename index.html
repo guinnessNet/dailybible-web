@@ -92,6 +92,11 @@
     box-shadow:0 8px 20px rgba(20,41,65,.22);transition:transform .18s ease,box-shadow .18s ease,background .18s ease}
   .cta:hover{background:var(--cta-hover);color:var(--cta-fg);transform:translateY(-2px);box-shadow:0 12px 26px rgba(20,41,65,.28)}
   .cta svg{width:18px;height:18px;flex:none}
+  .cta-row{display:flex;flex-wrap:wrap;align-items:center;gap:.9rem;margin-top:1.8rem}
+  .cta-row .cta{margin-top:0}
+  /* 보조 CTA(App Store): 주 CTA 인 Play 와 위계를 두려고 외곽선 스타일 */
+  .cta-alt{background:transparent;color:var(--heading);border:1px solid var(--line);box-shadow:none}
+  .cta-alt:hover{background:var(--line-soft);color:var(--heading);box-shadow:0 10px 22px rgba(20,41,65,.14)}
   .hero-shot{align-self:center}
 
   /* ---------- PHONE FRAME ---------- */
@@ -253,10 +258,16 @@
         <h1 class="title">데일리바이블</h1>
         <p class="tagline">매일 읽는 무료 성경 앱</p>
         <p class="intro">광고 없이 여러 번역본을 오프라인으로 읽고 들을 수 있습니다. 구절을 묶어 링크로 나누고, 오래 남긴 형광펜과 메모를 파일로 물려줄 수도 있습니다.</p>
-        <a class="cta" href="https://play.google.com/store/apps/details?id=kr.dailybible.app" rel="noopener" aria-label="Google Play에서 데일리바이블 다운로드">
-          <svg viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M4 3.2c-.3.2-.5.6-.5 1.1v15.4c0 .5.2.9.5 1.1l8.4-8.8L4 3.2zm10 6.6l2.9-1.7-9-5.2c-.4-.2-.8-.2-1.1 0l7.2 6.9zm4.7 1.3l-2.9-1.7-2.4 2.3 2.4 2.3 2.9-1.7c.7-.4.7-1.1 0-1.5zm-15.7 9c.3.2.7.2 1.1 0l9-5.2-2.9-1.7-7.2 6.9z"/></svg>
-          Google Play에서 다운로드
-        </a>
+        <div class="cta-row">
+          <a class="cta" href="https://play.google.com/store/apps/details?id=kr.dailybible.app" rel="noopener" aria-label="Google Play에서 데일리바이블 다운로드">
+            <svg viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M4 3.2c-.3.2-.5.6-.5 1.1v15.4c0 .5.2.9.5 1.1l8.4-8.8L4 3.2zm10 6.6l2.9-1.7-9-5.2c-.4-.2-.8-.2-1.1 0l7.2 6.9zm4.7 1.3l-2.9-1.7-2.4 2.3 2.4 2.3 2.9-1.7c.7-.4.7-1.1 0-1.5zm-15.7 9c.3.2.7.2 1.1 0l9-5.2-2.9-1.7-7.2 6.9z"/></svg>
+            Google Play에서 다운로드
+          </a>
+          <a class="cta cta-alt" href="https://apps.apple.com/kr/app/id6788610916" rel="noopener" aria-label="App Store에서 데일리바이블 다운로드">
+            <svg viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M16.4 12.7c0-2.1 1.7-3.1 1.8-3.2-1-1.4-2.5-1.6-3-1.7-1.3-.1-2.5.8-3.1.8-.6 0-1.6-.8-2.7-.7-1.4 0-2.7.8-3.4 2.1-1.4 2.5-.4 6.2 1 8.2.7 1 1.5 2.1 2.5 2.1 1 0 1.4-.6 2.6-.6 1.2 0 1.6.6 2.7.6 1.1 0 1.8-1 2.5-2 .8-1.1 1.1-2.2 1.1-2.3 0 0-2-.8-2-3.3zM14.3 6c.5-.7.9-1.6.8-2.6-.8 0-1.8.5-2.4 1.2-.5.6-1 1.6-.9 2.5.9.1 1.9-.4 2.5-1.1z"/></svg>
+            App Store에서 다운로드
+          </a>
+        </div>
       </div>
       <div class="hero-shot reveal">
         <div class="phone" style="width:248px" aria-hidden="true">
@@ -522,7 +533,7 @@
         <details><summary>구절 묶음 링크는 어디에 저장되나요?</summary><p class="ans">어디에도 저장되지 않습니다. 구절 목록이 링크 문자열 자체에 담겨 있습니다.</p></details>
         <details><summary>내 메모를 다른 기기나 가족에게 옮길 수 있나요?</summary><p class="ans">내보내기/가져오기 기능으로 옮길 수 있습니다.</p></details>
         <details><summary>개역개정·NIV 같은 번역본은 왜 없나요?</summary><p class="ans">저작권이 있는 번역본은 제공·배포할 수 없습니다. 본인이 적법하게 보유한 파일은 직접 가져오기로 사용할 수 있습니다. 자세한 방법은 <a href="/docs/translation-guide.html">역본 가이드</a>를 참고하세요.</p></details>
-        <details><summary>아이폰(iOS) 버전은 없나요?</summary><p class="ans">준비 중입니다. 지금은 Google Play에서 먼저 만나실 수 있습니다.</p></details>
+        <details><summary>아이폰(iOS) 버전은 없나요?</summary><p class="ans">있습니다. App Store에서 내려받으실 수 있습니다. iOS 15.0 이상이면 설치됩니다.</p></details>
         <details><summary>앱이 요구하는 권한은 무엇인가요?</summary><p class="ans">인터넷 1개(업데이트 확인용)뿐입니다. 카메라·위치·연락처 등 민감 권한은 없습니다.</p></details>
       </div>
     </div>
