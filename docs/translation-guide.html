@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>데일리바이블 역본 만들기 가이드 (.dbbible.json)</title>
-<meta name="description" content="데일리바이블 앱에서 가져올 수 있는 성경 파일(.dbbible.json)의 공식 포맷 명세. 이 페이지를 AI에게 주면 역본·주석성경 파일을 만들 수 있습니다.">
+<title>데일리바이블 파일 만들기 가이드 (.dbbible.json / .dbstory.json)</title>
+<meta name="description" content="데일리바이블 앱에서 가져올 수 있는 성경 역본 파일(.dbbible.json)과 이야기 성경 파일(.dbstory.json)의 공식 포맷 명세. 이 페이지를 AI에게 주면 역본·주석성경·이야기 성경 파일을 만들 수 있습니다.">
 <style>
   :root { color-scheme: light dark; }
   body { font-family: -apple-system, "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
@@ -31,9 +31,11 @@
 </head>
 <body>
 
-<h1>데일리바이블 역본 만들기 가이드</h1>
-<p>데일리바이블 앱은 <code>.dbbible.json</code> 파일을 가져와 새 역본이나 <strong>주석성경</strong>으로 읽을 수 있습니다.
-이 문서는 그 파일의 <strong>공식 포맷 명세</strong>입니다. 사람이 직접 만들어도 되고,
+<h1>데일리바이블 파일 만들기 가이드</h1>
+<p>데일리바이블 앱은 두 가지 파일을 가져올 수 있습니다 —
+<code>.dbbible.json</code>(성경 <strong>역본</strong>·<strong>주석성경</strong>)과
+<code>.dbstory.json</code>(<strong>이야기 성경</strong>).
+이 문서는 두 파일의 <strong>공식 포맷 명세</strong>입니다. 사람이 직접 만들어도 되고,
 이 페이지 주소를 AI에게 주고 만들어 달라고 해도 됩니다.</p>
 
 <div class="warn">
@@ -42,6 +44,13 @@
 저작권이 있는 역본(예: 개역개정, NIV 등)으로 만든 파일을 <strong>다른 사람에게 배포·공유하는 것은 저작권 침해</strong>입니다.
 주석성경도 베이스 본문의 저작권을 그대로 따르므로, <strong>공유는 공개도메인 본문(예: 개역한글)으로 만든 것만</strong> 하세요.
 이 사이트는 저작권이 있는 역본 파일을 제공하지 않습니다.
+</div>
+
+<div class="tip">
+<strong>이야기 성경(<code>.dbstory.json</code>)도 만들 수 있습니다.</strong>
+성경을 <strong>이야기 단위로 다시 쓴 글</strong>(어린이용 이야기 성경 등)은 형식이 다릅니다 —
+아래 <a href="#story"><strong>이야기 성경 만들기</strong></a>를 보세요.
+이 문서의 앞부분은 <strong>성경 역본(<code>.dbbible.json</code>)</strong>에 대한 설명입니다.
 </div>
 
 <h2>AI에게 만들어 달라고 하기</h2>
@@ -120,7 +129,7 @@ https://dailybible.kr/docs/translation-guide.html
 <li><strong>재공유와 승격</strong>: 받은 파일(주석+메모)을 기반으로 앱의 "주석성경 만들기"로 새 버전을 만들면, 이전 공유자의 메모(memo)는 주석(note) 뒤에 줄바꿈으로 합쳐지고(승격), 내 메모가 새 memo가 됩니다. 즉 파일 안의 메모는 항상 "직전 공유자 한 사람"의 것입니다</li>
 </ul>
 
-<h2>66권 표준 책 ID</h2>
+<h2 id="canon">66권 표준 책 ID</h2>
 <p>구약(39권):</p>
 <pre>GEN EXO LEV NUM DEU JOS JDG RUT 1SA 2SA 1KI 2KI 1CH 2CH EZR NEH EST JOB
 PSA PRO ECC SNG ISA JER LAM EZK DAN HOS JOL AMO OBA JON MIC NAH HAB ZEP
@@ -435,6 +444,492 @@ if __name__ == "__main__":
 <li>장 번호 건너뜀 — 반드시 1부터 연속</li>
 <li>표준 외 책 ID (<code>Gen</code>, <code>gen</code> 불가 — 대문자 <code>GEN</code>)</li>
 <li>30MB 초과 — 책을 나눠 여러 파일로 만드세요</li>
+</ul>
+
+<h2 id="story">이야기 성경 만들기 (.dbstory.json)</h2>
+<p>여기서부터는 <strong>이야기 성경</strong> 파일에 대한 설명입니다. 위에서 다룬 역본(<code>.dbbible.json</code>)과는
+<strong>형식이 완전히 다릅니다</strong> — 섞어 쓸 수 없습니다.</p>
+<p>이야기 성경은 성경을 <strong>이야기 단위로 다시 쓴 글</strong>입니다. 절 번호가 없고,
+"본문을 옮긴 것"이 아니라 "다시 쓴 것"을 담습니다. 어린이용 이야기 성경, 새신자용 쉬운 이야기,
+주일학교 교재 같은 것을 만들 때 씁니다.</p>
+<table>
+<tr><th></th><th>역본 <code>.dbbible.json</code></th><th>이야기 성경 <code>.dbstory.json</code></th></tr>
+<tr><td>단위</td><td>66권 / 장 / 절</td><td>이야기 / 문단 (<strong>절 번호 없음</strong>)</td></tr>
+<tr><td>앱에서</td><td>성경 리더</td><td><strong>별도 이야기 리더</strong>로 열림</td></tr>
+<tr><td>형광펜·메모·검색·묶음공유</td><td>지원</td><td><strong>지원 안 함</strong></td></tr>
+<tr><td>음성 낭독(TTS)</td><td>지원 (절 단위)</td><td>지원 (문단 단위)</td></tr>
+<tr><td>원문으로 가기</td><td>—</td><td>출처(<code>ref</code>)를 탭하면 성경 본문으로 이동</td></tr>
+<tr><td>삽화</td><td>—</td><td><strong>넣을 수 없음</strong> (아래 참조)</td></tr>
+<tr><td>최대 크기</td><td>30MB</td><td><strong>5MB</strong></td></tr>
+</table>
+<p>번역본 선택 목록에서는 <code>이야기</code> 태그가 붙어 표시되며, 고르면 역본이 바뀌는 것이 아니라
+<strong>이야기 리더가 열립니다.</strong></p>
+
+<h2>이야기 파일 형식 요약</h2>
+<p>UTF-8 인코딩의 <strong>단일 JSON 파일</strong>이며, 최대 <strong>5MB</strong>입니다. 최상위 구조:</p>
+<table>
+<tr><th>필드</th><th>타입</th><th>설명</th></tr>
+<tr><td><code>format</code></td><td>string</td><td><code>"dailybible-story@1"</code> (필수, 고정값 — 전체 문자열)</td></tr>
+<tr><td><code>id</code></td><td>string</td><td>컬렉션 고유 ID. 영문/숫자/<code>-</code>/<code>_</code> 1~32자. 같은 ID로 다시 가져오면 <strong>덮어씀</strong>. <strong>앱 기본 제공 ID(<code>KIDS</code>)는 쓸 수 없음</strong></td></tr>
+<tr><td><code>name</code></td><td>string</td><td>앱에 표시될 이름 (필수). 예: <code>"우리 교회 어린이 이야기"</code></td></tr>
+<tr><td><code>language</code></td><td>string</td><td>언어 코드. 생략하면 <code>"ko"</code>로 처리. 음성 낭독 언어에 사용</td></tr>
+<tr><td><code>description</code></td><td>string</td><td>선택. 목차 상단에 표시되는 한 줄 설명</td></tr>
+<tr><td><code>license</code></td><td>string</td><td>선택. 예: <code>"CC BY-SA 4.0"</code></td></tr>
+<tr><td><code>styleProfile</code></td><td>string</td><td>선택. 집필 기준 이름(예: <code>"kids"</code>). 앱 동작에는 영향 없음</td></tr>
+<tr><td><code>stories</code></td><td>array</td><td>이야기 목록. <strong>1편 이상</strong> (필수)</td></tr>
+</table>
+
+<h2>stories 항목 (이야기)</h2>
+<pre>{
+  "id": "noah",
+  "title": "노아와 큰 배",
+  "ref": "GEN 6:5-9:17",
+  "paragraphs": [
+    { "text": "하나님이 세상을 내려다보셨어요. 사람들이 나쁜 일만 하고 있었어요.", "ref": "GEN 6:5-6" },
+    { "text": "그런데 노아는 달랐어요. 노아는 하나님 말씀을 잘 들었어요.", "ref": "GEN 6:8-9" }
+  ]
+}</pre>
+<ul>
+<li><code>id</code>: 컬렉션 안에서 고유해야 함. 영문/숫자/<code>-</code>/<code>_</code> 1~32자 (필수)</li>
+<li><code>title</code>: 목차와 화면 상단에 표시 (필수)</li>
+<li><code>ref</code>: <strong>선택.</strong> 이 이야기 전체의 출처. 있으면 앱에 <strong>"창세기 6~9장 읽기"</strong> 버튼이 생기고, 탭하면 성경 본문으로 이동합니다</li>
+<li><code>paragraphs</code>: 문단 배열. <strong>1개 이상</strong> (필수)</li>
+</ul>
+<div class="warn">
+<strong><code>image</code> 필드는 넣을 수 없습니다.</strong> 이야기에 <code>image</code>가 하나라도 있으면
+앱이 <strong>파일 전체를 거부</strong>합니다. 삽화는 앱이 기본 제공하는 이야기에만 들어갑니다 —
+가져온 파일이 그림을 실어 나르는 통로가 되면 남의 그림이 유통되기 때문입니다. <strong>텍스트만</strong> 담아 주세요.
+</div>
+
+<h2>paragraphs 항목 (문단)</h2>
+<pre>{ "text": "하나님이 말씀하셨어요. \"빛이 있어라.\" 그러자 빛이 생겼어요.", "ref": "GEN 1:3-4" }</pre>
+<ul>
+<li><code>text</code>: 문단 본문 (필수). 공백만 있는 문자열은 거부됩니다.
+<strong>절 번호를 직접 붙이지 마세요</strong> — 앱은 문단을 번호 없이 그립니다</li>
+<li><code>ref</code>: <strong>선택.</strong> 이 문단이 어느 절에서 왔는지</li>
+</ul>
+<div class="tip">
+문단은 <strong>배열 순서로만</strong> 식별됩니다. 이야기 성경이 형광펜·메모를 지원하지 않는 이유이기도 합니다 —
+나중에 문단을 하나 끼워 넣으면 뒤 문단의 위치가 전부 밀리기 때문입니다.
+</div>
+
+<h2 id="story-ref">출처(ref) 쓰는 법</h2>
+<p>가장 실수가 잦은 부분입니다. 책 ID는 <a href="#canon">위의 66권 표준 ID</a>를 씁니다
+(<strong>제2경전 ID는 이야기 출처로 쓸 수 없습니다</strong>).</p>
+<table>
+<tr><th>쓰는 법</th><th>뜻</th></tr>
+<tr><td><code>"GEN 1:1-5"</code></td><td>창세기 1장 1~5절</td></tr>
+<tr><td><code>"GEN 1:1"</code></td><td>창세기 1장 1절 (한 절)</td></tr>
+<tr><td><code>"GEN 6:5-9:17"</code></td><td>창세기 6장 5절 ~ <strong>9장</strong> 17절 (장을 걸치는 범위)</td></tr>
+<tr><td><code>"GEN 7:12,17-18"</code></td><td>창세기 7장 12절, 17~18절 (불연속 절)</td></tr>
+<tr><td><code>"LUK 23:44,46;JHN 19:30"</code></td><td>누가복음 23장 44·46절 <strong>과</strong> 요한복음 19장 30절 (여러 책 — 세미콜론으로 연결)</td></tr>
+</table>
+<p><strong>거부되는 것</strong> — 하나라도 걸리면 파일 전체를 가져오지 못합니다:</p>
+<ul>
+<li>66권에 없는 책 ID — <code>"XYZ 1:1"</code>, 소문자·오타</li>
+<li>0장 또는 0절 — <code>"GEN 0:1"</code>, <code>"GEN 1:0"</code></li>
+<li>역순 장 범위 — <code>"GEN 9:5-2:1"</code> (끝 장이 시작 장보다 <strong>커야</strong> 합니다)</li>
+<li>같은 장인데 장 표기를 반복 — <code>"GEN 1:1-1:5"</code>는 거부됩니다. <code>"GEN 1:1-5"</code>로 쓰세요</li>
+<li>세미콜론으로 이은 조각 중 <strong>하나라도</strong> 읽을 수 없으면 전체 거부 — <code>"GEN 1:1;아무거나"</code></li>
+</ul>
+<div class="tip">
+<strong>하이픈은 ASCII <code>-</code> 를 권합니다.</strong>
+문서 편집기가 하이픈을 en대시(<code>–</code>)로 자동 변환하는 일이 흔한데,
+en대시·em대시(<code>—</code>)·물결표(<code>~</code>)도 범위 구분자로 인정하므로
+<code>"GEN 6:5–9:17"</code> 도 정상 동작합니다.
+</div>
+<p>앱은 <strong>문법만</strong> 검사합니다 — 그 장·절이 실제로 존재하는지는 확인하지 않습니다.
+<code>"GEN 99:1"</code>은 형식상 통과하지만 "원문으로 가기"가 제대로 동작하지 않습니다.</p>
+
+<h2>완성 예시 (전체 파일)</h2>
+<pre>{
+  "format": "dailybible-story@1",
+  "id": "MYCHURCH-KIDS",
+  "name": "우리 교회 어린이 이야기",
+  "language": "ko",
+  "description": "성경 이야기를 어린이가 읽기 쉽게 다시 쓴 글이에요.",
+  "license": "CC BY-SA 4.0",
+  "styleProfile": "kids",
+  "stories": [
+    {
+      "id": "creation",
+      "title": "하나님이 세상을 만드셨어요",
+      "ref": "GEN 1:1-2:3",
+      "paragraphs": [
+        { "text": "아주 오래오래전이었어요. 하나님이 하늘과 땅을 만드셨어요.", "ref": "GEN 1:1-2" },
+        { "text": "하나님이 말씀하셨어요. \"빛이 있어라.\" 그러자 빛이 생겼어요.", "ref": "GEN 1:3-4" }
+      ]
+    },
+    {
+      "id": "noah",
+      "title": "노아와 큰 배",
+      "ref": "GEN 6:5-9:17",
+      "paragraphs": [
+        { "text": "하나님이 노아에게 말씀하셨어요. \"아주 큰 배를 만들어라.\"", "ref": "GEN 6:13-14" },
+        { "text": "하늘에 무지개가 떴어요. 무지개는 하나님이 하신 약속의 표시예요.", "ref": "GEN 9:13-15" }
+      ]
+    }
+  ]
+}</pre>
+
+<h2>AI에게 이야기 성경 만들어 달라고 하기</h2>
+<p>ChatGPT·Claude 등에게 아래처럼 요청하세요.</p>
+<pre>다음 가이드 페이지의 "이야기 성경 만들기" 부분을 읽고 포맷을 정확히 지켜서
+데일리바이블 이야기 파일(.dbstory.json)을 만들어 줘:
+https://dailybible.kr/docs/translation-guide.html#story
+
+- 컬렉션 이름: (예: 우리 교회 어린이 이야기)
+- 컬렉션 ID: (예: MYCHURCH-KIDS)   ← KIDS 는 앱이 쓰는 ID라 사용 불가
+- 대상 독자: (예: 초등 저학년)
+- 만들 이야기 목록: (예: 창조 / 노아의 방주 / 다윗과 골리앗 …)
+
+저본 규칙 (반드시 지킬 것):
+- 개역한글 등 저작권이 없는 본문만 참고할 것.
+- 저작권이 있는 역본이나 시중에 나온 어린이 성경 본문을 넣지 말 것.
+- 어느 한 역본의 문장 구조를 그대로 따라가지 말 것.
+
+문체 규칙: 아래 "문체 지침"을 지킬 것.
+출처 규칙: 각 이야기와 각 문단에 ref 를 넣을 것. 페이지의 "출처(ref) 쓰는 법"을 정확히 따를 것.
+
+페이지의 "기계 판독용 명세(이야기 JSON Schema)"와 "추가 규칙"을 기준으로 만들고,
+페이지의 "검증 스크립트(Python)"를 실행해 [오류] 0건을 확인한 뒤에만
+.dbstory.json 파일로 저장해 줘.</pre>
+
+<div class="warn">
+<strong>저작권 — 이야기 성경도 같습니다.</strong>
+저작권이 있는 역본이나 <strong>시중에 판매되는 어린이 성경 본문을 AI에게 넣어 "쉽게 고쳐 줘"라고 하면
+그 결과물은 파생 저작물</strong>이 되어 본인 것이 아닙니다. 배포·공유할 수 없습니다.
+공개도메인 본문(예: 개역한글)을 저본으로 <strong>새로 쓰게</strong> 하세요.
+</div>
+
+<h2>문체 지침 (어린이 대상일 때)</h2>
+<p>아래는 <strong>앱이 검사하지 않는</strong> 권장 기준입니다 (검증 스크립트는 <code>[경고]</code>로만 알려 줍니다).
+그래도 AI에게 그대로 붙여 주면 결과가 크게 좋아집니다.</p>
+<pre>- 한 문장은 35자 이내, 한 문단은 2~4문장.
+- 대명사 대신 이름을 반복한다. ("그가" → "모세가")
+- 능동태, 과거형("~했어요"). 이중부정 금지.
+- 어려운 한자어를 쉬운 말로: 의롭다 → 바르다 / 언약 → 약속 / 죄 → 나쁜 일
+- 신학 용어는 첫 등장에서 한 문장으로 풀어 준다.
+  예: "예수님이 다시 살아나셨어요. 이걸 부활이라고 해요."
+- 죽음은 흐리지 말고 직접 말한다. "죽었어요", "돌아가셨어요".
+  "잠들었어요", "하늘나라로 갔어요" 같은 완곡어법은 쓰지 않는다.
+- 다만 피·상처 같은 잔혹한 묘사는 하지 않는다. 죽음은 한 문장으로 말하고 넘어간다.
+- 죽음을 이야기의 마지막 문단으로 끝내지 않는다. (홍수 뒤엔 무지개, 십자가 뒤엔 부활)</pre>
+<div class="tip">
+<strong>문장 35자·문단 2~4문장은 연구 근거가 있는 값이 아니라 권장 기준입니다.</strong>
+아이가 읽다 막히면 기준이 아니라 문장을 고치세요.<br>
+<strong>완곡어법을 쓰지 않는 것</strong>은 근거가 있습니다 — 아동 사별 도서 210권을 분석한 연구에서
+약 1/4이 "잠들었다" 류 표현을 썼고, 연구진은 그것이 <strong>명료함이 아니라 혼란을 낳는다</strong>고 지적했습니다.
+</div>
+
+<h2 id="story-machine-spec">기계 판독용 명세 (이야기 JSON Schema)</h2>
+<p><strong>AI/프로그램용:</strong> 파일을 생성하거나 검사할 때는 아래 스키마와 추가 규칙을 기준으로 삼으세요.
+(앱 검증기와 동기화됨, 2026-07-13 기준)</p>
+<pre>{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "dailybible .dbstory.json",
+  "type": "object",
+  "required": ["format", "id", "name", "stories"],
+  "properties": {
+    "format": { "const": "dailybible-story@1" },
+    "id": { "type": "string", "pattern": "^[A-Za-z0-9_-]{1,32}$" },
+    "name": { "type": "string", "minLength": 1 },
+    "language": { "type": "string" },
+    "description": { "type": "string" },
+    "license": { "type": "string" },
+    "styleProfile": { "type": "string" },
+    "stories": {
+      "type": "array", "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["id", "title", "paragraphs"],
+        "not": { "required": ["image"] },
+        "properties": {
+          "id": { "type": "string", "pattern": "^[A-Za-z0-9_-]{1,32}$" },
+          "title": { "type": "string", "minLength": 1 },
+          "ref": { "type": "string" },
+          "paragraphs": {
+            "type": "array", "minItems": 1,
+            "items": {
+              "type": "object",
+              "required": ["text"],
+              "properties": {
+                "text": { "type": "string", "minLength": 1 },
+                "ref": { "type": "string" }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}</pre>
+<p><strong>스키마로 표현되지 않는 추가 규칙</strong> — 모두 지켜야 앱이 파일을 받습니다:</p>
+<ol>
+<li><code>format</code>은 정확히 <code>"dailybible-story@1"</code>. 역본 형식(<code>dailybible-translation@1</code>)을 쓰면 안 됩니다</li>
+<li>컬렉션 <code>id</code>는 <strong>앱 기본 제공 이야기 ID와 겹치면 안 됨</strong> (현재: <code>KIDS</code>)</li>
+<li>이야기 <code>id</code>는 컬렉션 안에서 <strong>중복 불가</strong></li>
+<li>이야기에 <code>image</code> 필드가 있으면 <strong>파일 전체 거부</strong></li>
+<li><code>ref</code>는 "출처(ref) 쓰는 법"의 문법을 정확히 지켜야 하며, 세미콜론으로 이은 조각 중 <strong>하나라도</strong> 읽을 수 없으면 거부. 책 ID는 66권 정경만 (제2경전 불가)</li>
+<li><code>text</code>는 공백만 있는 문자열 불가</li>
+<li>파일 전체는 UTF-8, <strong>5MB</strong> 이하</li>
+<li>명세에 없는 필드는 <strong>무시</strong>됩니다(오류 아님) — 단 이야기의 <code>image</code>만 예외로 오류</li>
+</ol>
+
+<h2 id="story-validator">검증 스크립트 (Python) — 이야기</h2>
+<p>완성한 파일이 올바른지 아래 스크립트로 확인할 수 있습니다 (표준 라이브러리만 사용, Python 3.8+).
+<strong>AI에게 파일을 만들게 했다면, 이 스크립트를 실행해 <code>[오류] 0건</code>을 확인한 결과와 함께 달라고 하세요.</strong></p>
+<pre>python3 validate_dbstory.py 내파일.dbstory.json</pre>
+<p><code>[오류]</code>는 앱이 가져오기를 거부하는 문제, <code>[경고]</code>는 동작하지만 고치면 좋은 문제입니다
+(문체 경고는 <code>styleProfile</code>이 <code>"kids"</code>일 때만 표시됩니다).</p>
+<pre>#!/usr/bin/env python3
+# 데일리바이블 .dbstory.json 검증 스크립트 (dailybible-story@1, 앱 검증기와 동일 규칙)
+# 사용법: python3 validate_dbstory.py 파일.dbstory.json
+# 결과: [오류] = 앱에서 가져오기 실패, [경고] = 동작하지만 권장 수정. 오류 0건이면 exit 0.
+import json
+import os
+import re
+import sys
+
+CANON = set(
+    "GEN EXO LEV NUM DEU JOS JDG RUT 1SA 2SA 1KI 2KI 1CH 2CH EZR NEH "
+    "EST JOB PSA PRO ECC SNG ISA JER LAM EZK DAN HOS JOL AMO OBA JON "
+    "MIC NAH HAB ZEP HAG ZEC MAL MAT MRK LUK JHN ACT ROM 1CO 2CO GAL "
+    "EPH PHP COL 1TH 2TH 1TI 2TI TIT PHM HEB JAS 1PE 2PE 1JN 2JN 3JN "
+    "JUD REV".split()
+)
+RESERVED_IDS = {"KIDS"}          # 앱이 기본 제공하는 이야기 컬렉션 ID
+ID_RE = re.compile(r"^[A-Za-z0-9_-]{1,32}$")
+PART_RE = re.compile(r"^([1-3]?[A-Za-z]{2,3})\s+(\d+):(.+)$")
+CROSS_RE = re.compile(r"^(\d+)\s*[-–—−~〜～]\s*(\d+):(\d+)$")   # 앱과 같은 대시 집합
+RANGE_RE = re.compile(r"^(\d+)\s*[-–—−~〜～]\s*(\d+)$")
+MAX_BYTES = 5 * 1024 * 1024
+MAX_SENT_CHARS = 35              # 문체 권장값(앱은 검사하지 않음)
+MAX_PARA_SENTS = 4
+EUPHEMISMS = ["잠들었어요", "잠들었다", "하늘나라로 갔어요", "먼 길을 떠났어요", "떠나갔어요", "눈을 감았어요"]
+
+errors = []
+warnings = []
+
+
+def err(msg):
+    errors.append(msg)
+
+
+def warn(msg):
+    warnings.append(msg)
+
+
+def finish(stats=None):
+    for w in warnings:
+        print("[경고]", w)
+    for e in errors:
+        print("[오류]", e)
+    if errors:
+        print("\n검증 실패 — 오류 %d건 (앱에서 가져오기가 거부됩니다)" % len(errors))
+        sys.exit(1)
+    if stats:
+        print("검증 통과 ✓  이야기 %d편 · 문단 %d개 · %d자 (경고 %d건)" % (*stats, len(warnings)))
+    sys.exit(0)
+
+
+def parse_verse_spec(spec):
+    nums = set()
+    for part in spec.split(","):
+        part = part.strip()
+        if not part:
+            continue
+        m = RANGE_RE.match(part)
+        if m:
+            a, b = int(m.group(1)), int(m.group(2))
+            lo, hi = min(a, b), max(a, b)
+            hi = min(hi, lo + 200)
+            nums.update(range(lo, hi + 1))
+            continue
+        m2 = re.search(r"\d+", part)
+        if m2:
+            nums.add(int(m2.group(0)))
+    return sorted(nums)
+
+
+def check_ref(ref, where):
+    """앱의 ref 검증기와 같은 규칙. 문제가 있으면 오류를 쌓는다."""
+    chunks = [c.strip() for c in ref.split(";") if c.strip()]
+    if not chunks:
+        err("%s: ref 가 비어 있습니다." % where)
+        return
+    for chunk in chunks:
+        m = PART_RE.match(chunk)
+        if not m:
+            err('%s: 출처를 읽을 수 없습니다 — "%s"' % (where, chunk))
+            return
+        bid = m.group(1).upper()
+        if bid not in CANON:
+            err('%s: 66권에 없는 책 ID "%s" (제2경전은 이야기 출처로 쓸 수 없습니다)' % (where, bid))
+            return
+        chapter = int(m.group(2))
+        if chapter &lt; 1:
+            err("%s: 장 번호는 1 이상이어야 합니다 — %s" % (where, chunk))
+            return
+        spec = m.group(3).strip()
+        cm = CROSS_RE.match(spec)
+        if cm:
+            start_v, end_ch, end_v = int(cm.group(1)), int(cm.group(2)), int(cm.group(3))
+            if start_v &lt; 1 or end_v &lt; 1:
+                err("%s: 절 번호는 1 이상이어야 합니다 — %s" % (where, chunk))
+                return
+            if end_ch &lt;= chapter:
+                err("%s: 끝 장이 시작 장보다 커야 합니다 — %s (같은 장이면 'GEN 1:1-5' 형태로)" % (where, chunk))
+                return
+            continue
+        verses = parse_verse_spec(spec)
+        if not verses or verses[0] &lt; 1:
+            err("%s: 절 번호를 읽을 수 없습니다 (0절 불가) — %s" % (where, chunk))
+            return
+
+
+def split_sentences(text):
+    """큰따옴표를 아는 문장 분할 — 대사가 있어도 길이를 제대로 잰다."""
+    out, buf = [], ""
+    for ch in text:
+        if ch in '"“”':
+            if buf.strip():
+                out.append(buf.strip())
+            buf = ""
+            continue
+        buf += ch
+        if ch in ".!?":
+            if buf.strip():
+                out.append(buf.strip())
+            buf = ""
+    if buf.strip():
+        out.append(buf.strip())
+    return out
+
+
+def check_style(story_id, idx, text):
+    sents = split_sentences(text)
+    if len(sents) &gt; MAX_PARA_SENTS:
+        warn("%s 문단 %d: %d문장 (권장 %d문장 이하)" % (story_id, idx, len(sents), MAX_PARA_SENTS))
+    for s in sents:
+        if len(s) &gt; MAX_SENT_CHARS:
+            warn('%s 문단 %d: %d자 문장 (권장 %d자 이하) — "%s"' % (story_id, idx, len(s), MAX_SENT_CHARS, s))
+    for e in EUPHEMISMS:
+        if e in text:
+            warn('%s 문단 %d: 죽음을 흐리는 표현 "%s" — 직접 말하세요("죽었어요").' % (story_id, idx, e))
+
+
+def main(path):
+    if not os.path.isfile(path):
+        err("파일을 찾을 수 없습니다: %s" % path)
+        finish()
+    if os.path.getsize(path) &gt; MAX_BYTES:
+        err("파일이 5MB를 초과합니다 — 이야기를 나눠 여러 파일로 만드세요.")
+    try:
+        with open(path, encoding="utf-8", errors="strict") as f:
+            raw = json.load(f)
+    except UnicodeDecodeError:
+        err("UTF-8 인코딩이 아닙니다.")
+        finish()
+    except json.JSONDecodeError as e:
+        err("JSON 문법 오류: %s" % e)
+        finish()
+    if not isinstance(raw, dict):
+        err("최상위가 JSON 객체가 아닙니다.")
+        finish()
+
+    fmt = raw.get("format")
+    if fmt != "dailybible-story@1":
+        if isinstance(fmt, str) and fmt.startswith("dailybible-translation@"):
+            err("이건 역본 형식입니다. 이야기 파일의 format 은 정확히 \"dailybible-story@1\" 이어야 합니다.")
+        else:
+            err('format 값 오류: %r — 정확히 "dailybible-story@1"' % fmt)
+
+    cid = raw.get("id")
+    if not isinstance(cid, str) or not ID_RE.match(cid):
+        err("id: 영문/숫자/-/_ 조합 1~32자여야 합니다.")
+    elif cid in RESERVED_IDS:
+        err("id '%s' 는 앱이 기본 제공하는 이야기 ID라 쓸 수 없습니다 — 다른 ID를 쓰세요." % cid)
+
+    if not isinstance(raw.get("name"), str) or not raw["name"].strip():
+        err("name(컬렉션 이름)이 비어 있습니다.")
+    if not isinstance(raw.get("language"), str) or not raw.get("language"):
+        warn("language 가 없습니다 — 앱이 'ko'로 처리합니다. 음성 낭독 언어에 쓰이므로 명시를 권장합니다.")
+
+    stories = raw.get("stories")
+    if not isinstance(stories, list) or not stories:
+        err("stories 배열이 비었습니다.")
+        finish()
+
+    kids = raw.get("styleProfile") == "kids"
+    seen = set()
+    n_paras = 0
+    n_chars = 0
+    for i, s in enumerate(stories):
+        if not isinstance(s, dict):
+            err("stories[%d]: 객체가 아닙니다." % i)
+            continue
+        sid = s.get("id")
+        if not isinstance(sid, str) or not ID_RE.match(sid):
+            err("stories[%d]: 이야기 id 가 올바르지 않습니다(영문/숫자/-/_ 1~32자)." % i)
+            continue
+        if sid in seen:
+            err("중복된 이야기 ID: %s" % sid)
+        seen.add(sid)
+
+        if not isinstance(s.get("title"), str) or not s["title"].strip():
+            err("%s: title 이 비어 있습니다." % sid)
+        if "image" in s:
+            err("%s: 가져온 이야기에는 image 를 넣을 수 없습니다 — 필드를 지우세요." % sid)
+
+        if isinstance(s.get("ref"), str) and s["ref"].strip():
+            check_ref(s["ref"].strip(), "%s(이야기 출처)" % sid)
+        else:
+            warn("%s: 이야기 ref 가 없습니다 — 넣으면 '원문으로 가기' 버튼이 생깁니다." % sid)
+
+        paras = s.get("paragraphs")
+        if not isinstance(paras, list) or not paras:
+            err("%s: paragraphs 배열이 비었습니다." % sid)
+            continue
+        for j, p in enumerate(paras, start=1):
+            if not isinstance(p, dict) or not isinstance(p.get("text"), str) or not p["text"].strip():
+                err("%s 문단 %d: text 가 비었거나 문자열이 아닙니다." % (sid, j))
+                continue
+            n_paras += 1
+            n_chars += len(p["text"])
+            if isinstance(p.get("ref"), str) and p["ref"].strip():
+                check_ref(p["ref"].strip(), "%s 문단 %d" % (sid, j))
+            if kids:
+                check_style(sid, j, p["text"])
+
+    finish(stats=(len(seen), n_paras, n_chars))
+
+
+if __name__ == "__main__":
+    if len(sys.argv) != 2:
+        print("사용법: python3 validate_dbstory.py 파일.dbstory.json")
+        sys.exit(2)
+    main(sys.argv[1])</pre>
+
+<h2>앱에서 쓰는 법</h2>
+<ul>
+<li><strong>가져오기</strong>: 앱의 <strong>설정 → 성경 가져오기</strong>에서 <code>.dbstory.json</code> 파일을 선택합니다
+(안드로이드는 파일 관리자에서 파일을 탭해 "데일리바이블"로 여는 것도 가능)</li>
+<li><strong>읽기</strong>: 화면 위 <strong>번역본 배지</strong>를 탭하면 목록에 <code>이야기</code> 태그가 붙어 나타납니다.
+고르면 이야기 목차가 열립니다</li>
+<li><strong>숨기기</strong>: 설정 → <strong>즐겨찾기 번역본</strong>에서 별표를 끄면 목록에서 사라집니다</li>
+<li><strong>내보내기·삭제</strong>: 설정 → 성경 가져오기 아래 <strong>"가져온 이야기"</strong> 목록에서</li>
+<li><strong>덮어쓰기</strong>: 같은 <code>id</code>로 다시 가져오면 기존 컬렉션을 덮어씁니다 (개정판 배포에 활용)</li>
+</ul>
+
+<h2>이야기 성경에서 자주 하는 실수</h2>
+<ul>
+<li><code>format</code>에 역본 형식(<code>dailybible-translation@1</code>)을 씀 — 이야기는 <code>dailybible-story@1</code></li>
+<li><code>id</code>를 <code>KIDS</code>로 씀 — 앱 기본 제공 ID라 거부됩니다</li>
+<li>이야기에 <code>image</code>를 넣음 — 파일 전체가 거부됩니다</li>
+<li>문단 <code>text</code> 안에 절 번호를 직접 써 넣음 (<code>"1 태초에 …"</code>) — 이야기는 절 번호를 쓰지 않습니다</li>
+<li><code>"GEN 1:1-1:5"</code>처럼 같은 장에 장 표기를 반복 — <code>"GEN 1:1-5"</code>로</li>
+<li>저작권 있는 어린이 성경을 AI에게 넣고 "쉽게 고쳐 줘"라고 함 — <strong>파생 저작물</strong>이라 배포할 수 없습니다</li>
 </ul>
 
 <p style="margin-top:3em; font-size:0.85em; color:#6b7280;">
